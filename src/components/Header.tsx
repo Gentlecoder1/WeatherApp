@@ -1,0 +1,24 @@
+import { CiSun } from "react-icons/ci";
+import { IoSettingsOutline } from "react-icons/io5";
+import { ChevronDown } from "lucide-react"
+
+const Header = () => {
+  return (
+    <header className="w-full mx-auto">
+        <div className='flex justify-between items-center text-white'>
+            <div className='flex items-center text-[15.4px] sm:text-[22px] font-bold'>
+                <CiSun className="w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]" fill="#FF820A" />
+                <p>Weather Now</p>
+            </div>
+
+            <div className="bg-[#262540] rounded-[8px] flex items-center gap-[10px] px-[10px] py-[8px] sm:px-[16px] sm:py-[12px]">
+                <IoSettingsOutline className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px]" />
+                <p className="text-[14px] sm:text-[16px] font-medium">Units</p>
+                <ChevronDown className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px]" />
+            </div>
+        </div>
+    </header>
+  )
+}
+
+export default Header
