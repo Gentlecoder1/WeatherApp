@@ -27,7 +27,7 @@ const Body = () => {
                 
                 <motion.div 
                     whileTap={{ scale: 0.98 }}
-                    className="bg-[#4658D9] cursor-pointer py-[16px] px-[24px] rounded-[12px]"
+                    className="bg-[#4658D9] hover:bg-[#2B1B9C] cursor-pointer py-[16px] px-[24px] rounded-[12px]"
                 >
                     <p className="text-[20px]">Search</p>
                 </motion.div>
