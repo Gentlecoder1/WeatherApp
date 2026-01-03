@@ -5,10 +5,14 @@ body {
   background-color: #02012C;
 }
 
-/* .active {
-  @apply bg-blue-100 text-blue-700;
+.button {
+  ul {
+    .active {
+      @apply bg-blue-100 text-blue-700;
+    }
+    
+    .not-active {
+      @apply text-gray-700 hover:bg-gray-200;
+    }
+  }
 }
-
-.not-active {
-  @apply text-gray-700 hover:bg-gray-200;
-} */

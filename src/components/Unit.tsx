@@ -1,33 +1,52 @@
-import React from 'react'
+import React, { useState } from "react"
+import clsx from "clsx"
 import { unitTemp } from './index'
 
 const Unit = () => {
+    // Track selected unit ID per category (key = category id, value = unit id)
+    // Default to id 1 (first option) for each category
+    const [selectedUnits, setSelectedUnits] = useState<Record<number, number>>(() => {
+        const defaults: Record<number, number> = {}
+        unitTemp.forEach((category, index) => {
+            defaults[index] = 1 // default to first unit (id: 1)
+        })
+        return defaults
+    })
+
+    const handleSelect = (categoryIndex: number, unitId: number) => {
+        setSelectedUnits(prev => ({ ...prev, [categoryIndex]: unitId }))
+    }
 
   return (
-    <div className='w-[214px] bg-[#262540] border border-[#3C3B5E] py-[6px] px-[8px] rounded-[12px]'>
-        <div className='text-[16px] font-500 py-[10px] px-[8px]'>Switch to Imperial</div>
+    <div className='w-[214px] text-white bg-[#262540] border border-[#3C3B5E] py-[10px] px-[8px] rounded-[12px] absolute'>
+        <div className='text-[18px] font-500 py-[10px] px-[8px]'>Switch to Imperial</div>
 
+        <div className='flex flex-col gap-[10px]'>
 
-        <div className='flex flex-col gap-[5px]'>
-
-            {unitTemp.map(({ id, title, units }) => (
-                <div 
-                    key={id}
-                    className='flex flex-col gap-[8px]'
-                >
-                    <h1 className='#ACACB7 text-[15px] font-500'>{title}</h1>
-                    {units.map(({ id, name }) => (
-                        <div 
-                            key={id}
-                            className='text-[16px] font-500'
-                        >
-                            <p>{name}</p>
-                        </div>
-                    ))}
-                </div>
+            {unitTemp.map(({ id, title, units }, index) => (
+                <React.Fragment key={index}>
+                    <div className='flex flex-col gap-[8px] cursor-pointer'>
+                        <h1 className='text-[#ACACB7] text-[14px] font-500'>{title}</h1>
+                        <ul>
+                            {units.map((unit) => (
+                                <li 
+                                    key={unit.id}
+                                    onClick={() => handleSelect(index, unit.id)}
+                                    className={clsx(
+                                        "py-[6px] px-[8px] text-[16px] font-500 rounded-[8px] text-white",
+                                        selectedUnits[index] === unit.id 
+                                            ? "bg-[#3C3B5E] " 
+                                            : ""
+                                    )}
+                                >
+                                   {unit.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    {index < unitTemp.length - 1 && <hr />}
+                </React.Fragment>
             ))}
-
-            <hr />
         </div>
     </div>
   )
