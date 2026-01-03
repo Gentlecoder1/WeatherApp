@@ -1,8 +1,8 @@
 // import React from 'react'
 import Sunny from '../assets/Sunny.png'
-import Cloudy from '../assets/cloud.png'
+import Hourly from './Hourly'
 
-import { Search , ChevronDown } from "lucide-react"
+import { Search  } from "lucide-react"
 import { motion } from "framer-motion"
 
 const Body = () => {
@@ -131,76 +131,7 @@ const Body = () => {
                 </div>
             </div>
 
-            <div className="w-full lg:max-w-[30%] bg-[#262540] rounded-[20px] flex flex-col p-[24px] gap-[16px]">
-                <div className='w-full flex justify-between items-center'>
-                    <h1 className='text-[20px] font-semibold'>Hourly forcast</h1>
-
-                    <motion.div 
-                        whileTap={{ scale: 0.98 }}
-                        className="bg-[#3C3B5E] rounded-[8px] flex items-center gap-[12px] px-[16px] py-[8px] sm:px-[16px] sm:py-[12px]"
-                    >
-                        <p className="text-[14px] sm:text-[16px] font-medium">Tuesday</p>
-                        <ChevronDown className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px]" />
-                    </motion.div>
-                </div>
-
-                <div className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
-                    <div className='flex items-center gap-[8px]'>
-                        <img src={Cloudy} className='w-[40px] h-[40px]' alt="" />
-                        <p className='text-[20px] font-medium'>3 PM</p>
-                    </div>
-                    <p className='text-[16px] font-medium'>20°</p>
-                </div>
-                <div className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
-                    <div className='flex items-center gap-[8px]'>
-                        <img src={Cloudy} className='w-[40px] h-[40px]' alt="" />
-                        <p className='text-[20px] font-medium'>3 PM</p>
-                    </div>
-                    <p className='text-[16px] font-medium'>20°</p>
-                </div>
-                <div className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
-                    <div className='flex items-center gap-[8px]'>
-                        <img src={Cloudy} className='w-[40px] h-[40px]' alt="" />
-                        <p className='text-[20px] font-medium'>3 PM</p>
-                    </div>
-                    <p className='text-[16px] font-medium'>20°</p>
-                </div>
-                <div className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
-                    <div className='flex items-center gap-[8px]'>
-                        <img src={Cloudy} className='w-[40px] h-[40px]' alt="" />
-                        <p className='text-[20px] font-medium'>3 PM</p>
-                    </div>
-                    <p className='text-[16px] font-medium'>20°</p>
-                </div>
-                <div className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
-                    <div className='flex items-center gap-[8px]'>
-                        <img src={Cloudy} className='w-[40px] h-[40px]' alt="" />
-                        <p className='text-[20px] font-medium'>3 PM</p>
-                    </div>
-                    <p className='text-[16px] font-medium'>20°</p>
-                </div>
-                <div className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
-                    <div className='flex items-center gap-[8px]'>
-                        <img src={Cloudy} className='w-[40px] h-[40px]' alt="" />
-                        <p className='text-[20px] font-medium'>3 PM</p>
-                    </div>
-                    <p className='text-[16px] font-medium'>20°</p>
-                </div>
-                <div className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
-                    <div className='flex items-center gap-[8px]'>
-                        <img src={Cloudy} className='w-[40px] h-[40px]' alt="" />
-                        <p className='text-[20px] font-medium'>3 PM</p>
-                    </div>
-                    <p className='text-[16px] font-medium'>20°</p>
-                </div>
-                <div className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
-                    <div className='flex items-center gap-[8px]'>
-                        <img src={Cloudy} className='w-[40px] h-[40px]' alt="" />
-                        <p className='text-[20px] font-medium'>3 PM</p>
-                    </div>
-                    <p className='text-[16px] font-medium'>20°</p>
-                </div>
-            </div>
+            <Hourly />
         </div>
     </div>
   )
