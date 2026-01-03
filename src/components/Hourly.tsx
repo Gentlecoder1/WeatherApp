@@ -1,5 +1,6 @@
 import Cloudy from '../assets/cloud.png'
 import Days from './Days';
+import { daysOfWeek } from './index'
 
 import { ChevronDown } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
@@ -8,6 +9,7 @@ import { useState } from "react";
 const Hourly = () => {
 
       const [openDay, setOpenDay] = useState(false);
+      const [selectedDay, setSelectedDay] = useState(daysOfWeek[2]); // default to Tuesday
     
       const dropIn = {
         hidden: {
@@ -32,9 +34,10 @@ const Hourly = () => {
             <motion.div 
                 onClick={() => setOpenDay(!openDay)}
                 whileTap={{ scale: 0.98 }}
-                className="bg-[#3C3B5E] rounded-[8px] flex items-center gap-[12px] px-[16px] py-[8px] sm:px-[16px] sm:py-[12px]"
+                className="bg-[#3C3B5E] rounded-[8px] flex items-center gap-[12px] px-[16px] py-[8px] sm:px-[16px] sm:py-[12px] cursor-pointer"
             >
-                <p className="text-[14px] sm:text-[16px] font-medium">Tuesday</p>
+                <p className="text-[14px] sm:text-[16px] font-medium">{selectedDay.name}</p>
+
                 <ChevronDown className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px]" />
             </motion.div>
         </div>
@@ -48,7 +51,13 @@ const Hourly = () => {
               exit="exit"
               className="flex justify-end"
             >
-              <Days />
+              <Days 
+                selectedDay={selectedDay} 
+                onSelect={(day) => {
+                  setSelectedDay(day)
+                  setOpenDay(false)
+                }} 
+              />
             </motion.div>
           )}
         </AnimatePresence>
