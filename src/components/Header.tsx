@@ -1,6 +1,7 @@
 import { CiSun } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { ChevronDown } from "lucide-react"
+import { motion } from "framer-motion"
 
 const Header = () => {
   return (
@@ -11,11 +12,14 @@ const Header = () => {
                 <p>Weather Now</p>
             </div>
 
-            <div className="bg-[#262540] rounded-[8px] flex items-center gap-[10px] px-[10px] py-[8px] sm:px-[16px] sm:py-[12px]">
+            <motion.div
+              whileTap={{ scale: 0.98 }}
+              className="bg-[#262540] rounded-[8px] flex items-center gap-[10px] px-[10px] py-[8px] sm:px-[16px] sm:py-[12px]"
+            >
                 <IoSettingsOutline className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px]" />
                 <p className="text-[14px] sm:text-[16px] font-medium">Units</p>
                 <ChevronDown className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px]" />
-            </div>
+            </motion.div>
         </div>
     </header>
   )
