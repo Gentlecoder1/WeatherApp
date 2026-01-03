@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import clsx from "clsx"
 import { unitTemp } from './index'
 
+
 const Unit = () => {
-    // Track selected unit ID per category (key = category id, value = unit id)
-    // Default to id 1 (first option) for each category
+        
     const [selectedUnits, setSelectedUnits] = useState<Record<number, number>>(() => {
         const defaults: Record<number, number> = {}
         unitTemp.forEach((category, index) => {
