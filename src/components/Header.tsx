@@ -1,7 +1,7 @@
 import { CiSun } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { ChevronDown } from "lucide-react"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 import Unit from "./Unit"
 import { useState } from "react";
@@ -9,6 +9,21 @@ import { useState } from "react";
 const Header = () => {
 
   const [openUnit, setOpenUnit] = useState(false);
+
+  const dropIn = {
+    hidden: {
+      y: '-5px',
+      opacity: 0
+    },
+    visible: {
+      y: "0",
+      opacity: 1
+    },
+    exit: {
+      y: '-5px',
+      opacity: 0
+    }
+  }
 
   return (
     <header className="w-full mx-auto space-y-3">
@@ -19,7 +34,7 @@ const Header = () => {
             </div>
 
             <motion.div
-              onClick={() => setOpenUnit(true)}
+              onClick={() => setOpenUnit(!openUnit)}
               whileTap={{ scale: 0.98 }}
               className="bg-[#262540] rounded-[8px] flex items-center gap-[10px] px-[10px] py-[8px] sm:px-[16px] sm:py-[12px]"
             >
@@ -29,10 +44,19 @@ const Header = () => {
             </motion.div>
         </div>
 
-        <div 
-          className="flex justify-end ">
-          <Unit />
-        </div>
+        <AnimatePresence>
+          {openUnit && (
+            <motion.div
+              variants={dropIn}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="flex justify-end"
+            >
+              <Unit />
+            </motion.div>
+          )}
+        </AnimatePresence>
     </header>
   )
 }
