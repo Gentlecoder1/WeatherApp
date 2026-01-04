@@ -1,6 +1,7 @@
 // import React from 'react'
 import Sunny from '../assets/Sunny.png'
 import Hourly from './Hourly'
+import Daily from './Daily'
 
 import { Search  } from "lucide-react"
 import { motion } from "framer-motion"
@@ -67,68 +68,7 @@ const Body = () => {
                     </div>
                 </div>
                 
-                <div className='w-full flex flex-col gap-[20px]'>
-                    <h1 className='text-[20px] font-semibold'>Daily forcast</h1>
-
-                    <div className='w-full grid grid-cols-3 sm:grid-cols-7 gap-[16px]'>
-                        <div className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[16px] flex flex-col items-center'>
-                            <p className='text-[18px] font-medium'>Tue</p>
-                            <div className='w-[60px] h-[60px]'><img src={Sunny} alt="" /></div>
-                            <div className='w-full flex justify-between'>
-                                <p>20°</p>
-                                <p>20°</p>
-                            </div>
-                        </div>
-                        <div className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[16px] flex flex-col items-center'>
-                            <p className='text-[18px] font-medium'>Tue</p>
-                            <div className='w-[60px] h-[60px]'><img src={Sunny} alt="" /></div>
-                            <div className='w-full flex justify-between'>
-                                <p>20°</p>
-                                <p>20°</p>
-                            </div>
-                        </div>
-                        <div className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[16px] flex flex-col items-center'>
-                            <p className='text-[18px] font-medium'>Tue</p>
-                            <div className='w-[60px] h-[60px]'><img src={Sunny} alt="" /></div>
-                            <div className='w-full flex justify-between'>
-                                <p>20°</p>
-                                <p>20°</p>
-                            </div>
-                        </div>
-                        <div className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[16px] flex flex-col items-center'>
-                            <p className='text-[18px] font-medium'>Tue</p>
-                            <div className='w-[60px] h-[60px]'><img src={Sunny} alt="" /></div>
-                            <div className='w-full flex justify-between'>
-                                <p>20°</p>
-                                <p>20°</p>
-                            </div>
-                        </div>
-                        <div className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[16px] flex flex-col items-center'>
-                            <p className='text-[18px] font-medium'>Tue</p>
-                            <div className='w-[60px] h-[60px]'><img src={Sunny} alt="" /></div>
-                            <div className='w-full flex justify-between'>
-                                <p>20°</p>
-                                <p>20°</p>
-                            </div>
-                        </div>
-                        <div className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[16px] flex flex-col items-center'>
-                            <p className='text-[18px] font-medium'>Tue</p>
-                            <div className='w-[60px] h-[60px]'><img src={Sunny} alt="" /></div>
-                            <div className='w-full flex justify-between'>
-                                <p>20°</p>
-                                <p>20°</p>
-                            </div>
-                        </div>
-                        <div className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[16px] flex flex-col items-center'>
-                            <p className='text-[18px] font-medium'>Tue</p>
-                            <div className='w-[60px] h-[60px]'><img src={Sunny} alt="" /></div>
-                            <div className='w-full flex justify-between'>
-                                <p>20°</p>
-                                <p>20°</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Daily />
             </div>
 
             <Hourly />
