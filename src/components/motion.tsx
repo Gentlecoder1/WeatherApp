@@ -179,9 +179,9 @@ export const FadeInLeft = ({ children, delay = 0, className, ...props }: MotionC
 // Fade in from right
 export const FadeInRight = ({ children, delay = 0, className, ...props }: MotionContainerProps) => (
   <motion.div
-    initial={{ opacity: 0, x: 30 }}
+    initial={{ opacity: 0, x: 20 }}
     animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.8, delay }}
+    transition={{ duration: 0.5, delay }}
     className={className}
     {...props}
   >

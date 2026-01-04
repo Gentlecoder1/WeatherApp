@@ -18,7 +18,7 @@ const Header = () => {
               delay={0.2}
               className='flex items-center text-[15.4px] sm:text-[22px] font-bold gap-[10px]'
             >
-                <img src={Logo} className="w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]" alt="" />
+                <img src={Logo} className="w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]" alt="ogo" />
                 <p>Weather Now</p>
             </FadeInLeft>
 

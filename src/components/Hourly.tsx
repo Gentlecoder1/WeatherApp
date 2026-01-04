@@ -17,7 +17,7 @@ const Hourly = () => {
       className="w-full lg:max-w-[30%] bg-[#262540] rounded-[20px] flex flex-col p-[24px] gap-[16px]"
     >
         <div className='w-full flex justify-between items-center'>
-            <h1 className='text-[20px] font-semibold'>Hourly forcast</h1>
+            <h1 className='text-[20px] font-semibold'>Hourly forecast</h1>
 
             <TapButton 
                 onClick={() => setOpenDay(!openDay)}
@@ -51,7 +51,7 @@ const Hourly = () => {
 
         <StaggerContainer 
           staggerDelay={0.12}
-          childrenDelay={1.0}
+          childrenDelay={0.5}
           className='flex flex-col gap-[16px]'
         >
           {hourlyForecast.map(({ id, time, icon, temp })=> (
