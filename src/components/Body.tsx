@@ -2,6 +2,7 @@
 import Sunny from '../assets/Sunny.png'
 import Hourly from './Hourly'
 import Daily from './Daily'
+import Condition from './Condition'
 
 import { Search  } from "lucide-react"
 import { motion } from "framer-motion"
@@ -49,24 +50,7 @@ const Body = () => {
                     </div>
                 </div>
 
-                <div className='w-full grid grid-cols-2 sm:grid-cols-4 gap-[24px]'>
-                    <div className='p-[20px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[20px]'>
-                        <p className='text-[18px] font-500 text-[#D4D3D9]'>Feels like</p>
-                        <p className='text-[32px] font-300'>18°</p>
-                    </div>
-                    <div className='p-[20px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[20px]'>
-                        <p className='text-[18px] font-500 text-[#D4D3D9]'>Feels like</p>
-                        <p className='text-[32px] font-300'>18°</p>
-                    </div>
-                    <div className='p-[20px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[20px]'>
-                        <p className='text-[18px] font-500 text-[#D4D3D9]'>Feels like</p>
-                        <p className='text-[32px] font-300'>18°</p>
-                    </div>
-                    <div className='p-[20px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[20px]'>
-                        <p className='text-[18px] font-500 text-[#D4D3D9]'>Feels like</p>
-                        <p className='text-[32px] font-300'>18°</p>
-                    </div>
-                </div>
+                <Condition />
                 
                 <Daily />
             </div>

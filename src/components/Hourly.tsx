@@ -64,15 +64,17 @@ const Hourly = () => {
 
         <div className='flex flex-col gap-[16px]'>
           {hourlyForecast.map(({ id, time, icon, temp })=> (
-            <div 
+            <motion.div
+              whileHover={{ scale: 1.05 }}
               key={id}
-              className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E]'>
+              className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]'
+            >
                 <div className='flex items-center gap-[8px]'>
                     <img src={icon} className='w-[40px] h-[40px]' alt="" />
                     <p className='text-[20px] font-medium'>{time}</p>
                 </div>
-                <p className='text-[16px] font-medium'>{temp}</p>
-            </div>
+                <p className='text-[16px] font-medium'>{temp}°</p>
+            </motion.div>
           ))}
         </div>
     </div>

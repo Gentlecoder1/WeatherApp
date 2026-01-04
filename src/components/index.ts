@@ -31,6 +31,29 @@ export const unitTemp = [
     }
 ]
 
+export const conditions = [
+    {
+        id: 1,
+        title: "Feels like",
+        value: "18°"
+    },
+    {
+        id: 2,
+        title: "Humidity",
+        value: "65%"
+    },
+    {
+        id: 3,
+        title: "Wind",
+        value: "15 km/h"
+    },
+    {
+        id: 4,
+        title: "Precipitation",
+        value: "5 mm"
+    }
+]
+
 export const daysOfWeek = [
     { id: 1, name: 'Sunday' },
     { id: 2, name: 'Monday' },
