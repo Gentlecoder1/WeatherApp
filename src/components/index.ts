@@ -7,7 +7,7 @@ import PartlyCloudy from '../assets/PartlyCloudy.svg'
 export const unitTemp = [
     {
         id: 1,
-        title: "Temperature",
+        title: "Temp",
         units: [
             { id: 1, name: 'Celsius (°C)' },
             { id: 2, name: 'Fahrenheit (°F)' }
@@ -90,5 +90,56 @@ export const dailyForecast = [
         icon: Rain,
         high: 17,
         low: 9
+    }
+]
+
+export const hourlyForecast = [
+    {
+        id: 1,
+        time: '1 PM',
+        icon: Sunny,   
+        temp: 18
+    },
+    {   
+        id: 2,
+        time: '2 PM',
+        icon: PartlyCloudy,
+        temp: 19
+    },
+    {  
+        id: 3,
+        time: '3 PM',
+        icon: Cloud,
+        temp: 17
+    },
+    {
+        id: 4,
+        time: '4 PM',
+        icon: Rain,
+        temp: 16
+    },
+    {
+        id: 5,
+        time: '5 PM',
+        icon: Thunderstorms,
+        temp: 15
+    },
+    {
+        id: 6,
+        time: '6 PM',
+        icon: Cloud,
+        temp: 14
+    },
+    {
+        id: 7,
+        time: '7 PM',
+        icon: PartlyCloudy,
+        temp: 13
+    },
+    {
+        id: 8,
+        time: '8 PM',
+        icon: Sunny,
+        temp: 12
     }
 ]
