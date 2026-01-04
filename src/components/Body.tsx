@@ -1,5 +1,8 @@
 // import React from 'react'
 import Sunny from '../assets/Sunny.png'
+import CloudImg from '../assets/cloud.png'
+import RainImg from '../assets/Rain.svg'
+import ThunderstormImg from '../assets/Thunderstorms.svg'
 import Hourly from './Hourly'
 import Daily from './Daily'
 import Condition from './Condition'
@@ -8,9 +11,17 @@ import WeatherBackground from './WeatherBackground'
 import { Search  } from "lucide-react"
 import { motion } from "framer-motion"
 
+// Weather icon mapping
+const weatherIcons = {
+    sunny: Sunny,
+    cloudy: CloudImg,
+    rainy: RainImg,
+    thunderstorm: ThunderstormImg
+}
+
 const Body = () => {
   // Change this value to see different backgrounds: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm'
-  const currentWeather: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' = 'cloudy'
+  const currentWeather: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' = 'thunderstorm'
   
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-[64px]">
@@ -59,7 +70,7 @@ const Body = () => {
                             animate={{ y: [0, 12, 0] }}
                             transition={{ duration: 2, repeat: Infinity }}
                         >
-                            <img src={Sunny} alt="" />
+                            <img src={weatherIcons[currentWeather]} alt={currentWeather} className="w-24 h-24" />
                         </motion.div>
                         <motion.div
                             animate={{ y: [12, 0, 12] }}

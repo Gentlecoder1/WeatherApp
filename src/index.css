@@ -29,3 +29,57 @@ body {
     background-color: rgba(255, 255, 255, 0.6);
   }
 }
+
+/* Cloud movement animation */
+@keyframes cloudMove {
+  0% {
+    left: -150px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Lightning bolt animation 1 */
+@keyframes lightning {
+  0%, 89%, 100% {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  90%, 92% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  91% {
+    opacity: 0.5;
+  }
+  93%, 94% {
+    opacity: 0.9;
+    transform: scaleY(1.05);
+  }
+  95% {
+    opacity: 0;
+  }
+}
+
+/* Lightning bolt animation 2 - offset timing */
+@keyframes lightning2 {
+  0%, 45%, 55%, 100% {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  46%, 48% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  47% {
+    opacity: 0.4;
+  }
+  49%, 50% {
+    opacity: 0.8;
+    transform: scaleY(1.02);
+  }
+  51% {
+    opacity: 0;
+  }
+}
