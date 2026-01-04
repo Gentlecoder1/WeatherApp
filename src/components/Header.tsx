@@ -1,8 +1,8 @@
-import { CiSun } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { ChevronDown } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
 
+import Logo from "../assets/Logo.svg"
 import Unit from "./Unit"
 import { useState } from "react";
 
@@ -28,8 +28,8 @@ const Header = () => {
   return (
     <header className="w-full mx-auto space-y-3">
         <div className='flex justify-between items-center text-white'>
-            <div className='flex items-center text-[15.4px] sm:text-[22px] font-bold'>
-                <CiSun className="w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]" fill="#FF820A" />
+            <div className='flex items-center text-[15.4px] sm:text-[22px] font-bold gap-[10px]'>
+                <img src={Logo} className="w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]" alt="" />
                 <p>Weather Now</p>
             </div>
 

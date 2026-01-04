@@ -16,3 +16,16 @@ body {
     }
   }
 }
+
+/* Lightning flash animation for thunderstorm */
+@keyframes flash {
+  0%, 90%, 100% {
+    background-color: transparent;
+  }
+  92%, 94% {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  93% {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+}

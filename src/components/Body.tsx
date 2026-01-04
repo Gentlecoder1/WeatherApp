@@ -3,11 +3,15 @@ import Sunny from '../assets/Sunny.png'
 import Hourly from './Hourly'
 import Daily from './Daily'
 import Condition from './Condition'
+import WeatherBackground from './WeatherBackground'
 
 import { Search  } from "lucide-react"
 import { motion } from "framer-motion"
 
 const Body = () => {
+  // Change this value to see different backgrounds: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm'
+  const currentWeather: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' = 'cloudy'
+  
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-[64px]">
         <div className="max-w-[330px] sm:max-w-[482px] md:max-w-[731px] text-center">
@@ -38,15 +42,32 @@ const Body = () => {
 
         <div className="w-full mx-auto lg:flex space-y-[32px] lg:space-y-0 text-white gap-[32px]">
             <div className="w-full lg:max-w-[70%] space-y-[32px]">
-                <div className="w-full bg-blue-500 rounded-[20px] flex flex-col sm:flex-row items-center justify-between py-[80px] px-[24px]">
-                    <div className="space-y-[12px]">
+
+                {/* weather info card */}
+                <div className="relative w-full rounded-[20px] flex flex-col sm:flex-row items-center justify-between py-[80px] px-[24px] overflow-hidden">
+                    {/* Animated Weather Background */}
+                    <WeatherBackground weatherType={currentWeather} />
+                    
+                    {/* Content overlay */}
+                    <div className="relative z-10 space-y-[12px]">
                         <h1 className="text-[28px] font-bold">Berlin, Germany</h1>
                         <p className="text-[18px] font-500">Friday, Jan 2, 2026</p>
                     </div>
 
-                    <div className="flex items-center">
-                        <div><img src={Sunny} alt="" /></div>
-                        <p className="text-[96px] font-bold"><i>20°</i></p>
+                    <div className="relative z-10 flex items-center">
+                        <motion.div
+                            animate={{ y: [0, 12, 0] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                        >
+                            <img src={Sunny} alt="" />
+                        </motion.div>
+                        <motion.div
+                            animate={{ y: [12, 0, 12] }}
+                            transition={{ duration: 2, repeat: Infinity }} 
+                            className="text-[96px] font-bold"
+                        >
+                            <i>20°</i>
+                        </motion.div>
                     </div>
                 </div>
 
