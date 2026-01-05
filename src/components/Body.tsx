@@ -26,6 +26,7 @@ const weatherIcons = {
 interface City {
     id: number;
     name: string;
+    language: string;
     latitude: number;
     longitude: number;
     country: string;
@@ -53,14 +54,42 @@ interface WeatherData {
 const geoUrl = `https://geocoding-api.open-meteo.com/v1/search`
 const mainUrl = `https://api.open-meteo.com/v1/forecast`
 
+// Map Open-Meteo weather codes to our weather types
+type WeatherType = 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm';
+
+const getWeatherType = (code: number | undefined): WeatherType => {
+    if (code === undefined) return 'sunny';
+    
+    // Clear sky
+    if (code === 0) return 'sunny';
+    
+    // Mainly clear, partly cloudy, overcast, fog
+    if ([1, 2, 3, 45, 48].includes(code)) return 'cloudy';
+    
+    // Drizzle, rain, freezing rain, rain showers, snow
+    if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86].includes(code)) return 'rainy';
+    
+    // Thunderstorm (with or without hail)
+    if ([95, 96, 99].includes(code)) return 'thunderstorm';
+    
+    return 'sunny'; // default
+};
+
 const Body = () => {
 
     const [location, setLocation] = useState('');
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
     const [suggestions, setSuggestions] = useState<City[]>([]);
+    const [selectedCity, setSelectedCity] = useState<City | null>(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Handle input change
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLocation(e.target.value);
+        setSelectedCity(null); // Clear selected city when user types
+    };
 
     // Search as user types with debounce
     useEffect(() => {
@@ -69,8 +98,8 @@ const Body = () => {
             clearTimeout(debounceRef.current);
         }
 
-        // Don't search if input is too short
-        if (location.trim().length < 2) {
+        // Don't search if we already selected a city or input is too short
+        if (selectedCity || location.trim().length < 2) {
             setSuggestions([]);
             return;
         }
@@ -85,7 +114,7 @@ const Body = () => {
                 clearTimeout(debounceRef.current);
             }
         };
-    }, [location]);
+    }, [location, selectedCity]);
 
     const searchCities = async (query: string) => {
         setError('');
@@ -94,7 +123,7 @@ const Body = () => {
             const geoRes = await axios.get(geoUrl, {
                 params: {
                     name: query,
-                    count: 10, // Get more results to find duplicates
+                    count: 4,
                     language: 'en',
                     format: 'json'
                 }
@@ -103,20 +132,22 @@ const Body = () => {
             if (geoRes.data.results && geoRes.data.results.length > 0) {
                 const results: City[] = geoRes.data.results;
                 
-                // If only 1 result, fetch weather directly
-                if (results.length === 1) {
-                    setSuggestions([]);
-                    fetchWeatherData(results[0]);
-                } else {
-                    // Multiple results - show suggestions (however many there are)
-                    setSuggestions(results);
-                }
+                // Show suggestions for user to pick
+                setSuggestions(results);
             } else {
                 setSuggestions([]);
             }
         } catch (err) {
             console.error("Search error", err);
         }
+    };
+
+    // Handle clicking on a suggestion - fill input and store city
+    const handleSelectCity = (city: City) => {
+        const fullName = `${city.name}, ${city.admin1 ? city.admin1 + ', ' : ''}${city.country}`;
+        setLocation(fullName);
+        setSelectedCity(city);
+        setSuggestions([]);
     };
 
     const handleSearch = async () => {
@@ -129,6 +160,13 @@ const Body = () => {
         setLoading(true);
         setError('');
 
+        // If we have a selected city, use it directly
+        if (selectedCity) {
+            fetchWeatherData(selectedCity);
+            return;
+        }
+
+        // Otherwise search for the city
         try {
             const geoRes = await axios.get(geoUrl, {
                 params: {
@@ -186,10 +224,10 @@ const Body = () => {
     // Get current temperature from weather data
     const currentTemp = weatherData?.current_weather?.temperature 
         ? Math.round(weatherData.current_weather.temperature) 
-        : 20;
+        : '---';
 
     // Get display name or default
-    const displayName = weatherData?.displayName || "Berlin, Germany";
+    const displayName = weatherData?.displayName || "---";
 
     // Format current date
     const currentDate = new Date().toLocaleDateString('en-US', {
@@ -199,9 +237,8 @@ const Body = () => {
         year: 'numeric'
     });
 
-
-  // Change this value to see different backgrounds: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm'
-  const currentWeather: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' = 'thunderstorm'
+    // Get weather type based on API weather code
+    const currentWeather = getWeatherType(weatherData?.current_weather?.weathercode);
   
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-[64px]">
@@ -222,7 +259,7 @@ const Body = () => {
                     <Search size={20} className="text-white" />
 
                     <input 
-                        onChange={(e) => setLocation(e.target.value)}
+                        onChange={handleInputChange}
                         className="outline-none text-[20px] bg-transparent w-full"
                         type="text" 
                         value={location} 
@@ -241,11 +278,11 @@ const Body = () => {
 
                 {/* Suggestions dropdown */}
                 {suggestions.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-[#262540] rounded-[12px] overflow-hidden z-20 max-w-[526px] border-2 border-red-500">
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-[#262540] rounded-[12px] overflow-hidden z-20 max-w-[526px]">
                         {suggestions.map((city) => (
                             <div
                                 key={city.id}
-                                onClick={() => fetchWeatherData(city)}
+                                onClick={() => handleSelectCity(city)}
                                 className="py-3 px-6 hover:bg-[#3C3B5E] cursor-pointer transition-colors"
                             >
                                 {city.name}, {city.admin1 ? `${city.admin1}, ` : ''}{city.country}
@@ -275,7 +312,7 @@ const Body = () => {
                     <WeatherBackground weatherType={currentWeather} />
                     
                     {/* Content overlay */}
-                    
+
                     <div className="relative z-10 space-y-[12px]">
                         <h1 className="text-[28px] font-bold">{displayName}</h1>
                         <p className="text-[18px] font-500">{currentDate}</p>
