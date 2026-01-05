@@ -8,7 +8,7 @@ const Unit = () => {
     const [selectedUnits, setSelectedUnits] = useState<Record<number, number>>(() => {
         const defaults: Record<number, number> = {}
         unitTemp.forEach((category, index) => {
-            defaults[index] = 1 // default to first unit (id: 1)
+            defaults[index] = category.units[0].id // default to first unit's id
         })
         return defaults
     })
@@ -23,7 +23,7 @@ const Unit = () => {
 
         <div className='flex flex-col gap-[10px]'>
 
-            {unitTemp.map(({ id, title, units }, index) => (
+            {unitTemp.map(({ title, units }, index) => (
                 <React.Fragment key={index}>
                     <div className='flex flex-col gap-[8px] cursor-pointer'>
                         <h1 className='text-[#ACACB7] text-[14px] font-500'>{title}</h1>
