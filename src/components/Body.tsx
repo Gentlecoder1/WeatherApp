@@ -9,6 +9,8 @@ import Condition from './Condition'
 import WeatherBackground from './WeatherBackground'
 import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from './motion'
 
+import { useState, useEffect, useRef } from 'react';
+import axios from 'axios'
 import { Search  } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -20,7 +22,184 @@ const weatherIcons = {
     thunderstorm: ThunderstormImg
 }
 
+// Type for city from geocoding API
+interface City {
+    id: number;
+    name: string;
+    latitude: number;
+    longitude: number;
+    country: string;
+    admin1?: string;
+}
+
+// Type for weather data
+interface WeatherData {
+    hourly: {
+        time: string[];
+        temperature_2m: number[];
+    };
+    daily: {
+        time: string[];
+        temperature_2m_max: number[];
+        temperature_2m_min: number[];
+    };
+    displayName: string;
+    current_weather?: {
+        temperature: number;
+        weathercode: number;
+    };
+}
+
+const geoUrl = `https://geocoding-api.open-meteo.com/v1/search`
+const mainUrl = `https://api.open-meteo.com/v1/forecast`
+
 const Body = () => {
+
+    const [location, setLocation] = useState('');
+    const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+    const [suggestions, setSuggestions] = useState<City[]>([]);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Search as user types with debounce
+    useEffect(() => {
+        // Clear previous timeout
+        if (debounceRef.current) {
+            clearTimeout(debounceRef.current);
+        }
+
+        // Don't search if input is too short
+        if (location.trim().length < 2) {
+            setSuggestions([]);
+            return;
+        }
+
+        // Debounce the search (wait 400ms after user stops typing)
+        debounceRef.current = setTimeout(() => {
+            searchCities(location);
+        }, 400);
+
+        return () => {
+            if (debounceRef.current) {
+                clearTimeout(debounceRef.current);
+            }
+        };
+    }, [location]);
+
+    const searchCities = async (query: string) => {
+        setError('');
+
+        try {
+            const geoRes = await axios.get(geoUrl, {
+                params: {
+                    name: query,
+                    count: 10, // Get more results to find duplicates
+                    language: 'en',
+                    format: 'json'
+                }
+            });
+
+            if (geoRes.data.results && geoRes.data.results.length > 0) {
+                const results: City[] = geoRes.data.results;
+                
+                // If only 1 result, fetch weather directly
+                if (results.length === 1) {
+                    setSuggestions([]);
+                    fetchWeatherData(results[0]);
+                } else {
+                    // Multiple results - show suggestions (however many there are)
+                    setSuggestions(results);
+                }
+            } else {
+                setSuggestions([]);
+            }
+        } catch (err) {
+            console.error("Search error", err);
+        }
+    };
+
+    const handleSearch = async () => {
+        if (location.trim().length < 2) {
+            setError("Please enter at least 2 characters");
+            return;
+        }
+        
+        setSuggestions([]);
+        setLoading(true);
+        setError('');
+
+        try {
+            const geoRes = await axios.get(geoUrl, {
+                params: {
+                    name: location,
+                    count: 3,
+                    language: 'en',
+                    format: 'json'
+                }
+            })
+
+            if (geoRes.data.results && geoRes.data.results.length > 0) {
+                // If clicking search, just fetch the first result
+                fetchWeatherData(geoRes.data.results[0]);
+            } else {
+                setError("City not found");
+                setLoading(false);
+            }
+        } catch (err) {
+            console.error("Search error", err);
+            setError("Search failed");
+            setLoading(false);
+        }
+    };
+
+    const fetchWeatherData = async (city: City) => {
+        setSuggestions([]);
+        setLoading(true);
+        setLocation(city.name);
+
+        try {
+            const weatherRes = await axios.get(mainUrl, {
+                params: {
+                    latitude: city.latitude,
+                    longitude: city.longitude,
+                    hourly: 'temperature_2m',
+                    daily: ['temperature_2m_max', 'temperature_2m_min'],
+                    current_weather: true,
+                    timezone: 'auto'
+                }
+            });
+
+            setWeatherData({
+                ...weatherRes.data,
+                displayName: `${city.name}, ${city.admin1 ? city.admin1 + ', ' : ''}${city.country}`
+            });
+            setError('');
+        } catch (err) {
+            console.error("Weather error", err);
+            setError("Failed to fetch weather data");
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    // Get current temperature from weather data
+    const currentTemp = weatherData?.current_weather?.temperature 
+        ? Math.round(weatherData.current_weather.temperature) 
+        : 20;
+
+    // Get display name or default
+    const displayName = weatherData?.displayName || "Berlin, Germany";
+
+    // Format current date
+    const currentDate = new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    });
+
+
   // Change this value to see different backgrounds: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm'
   const currentWeather: 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' = 'thunderstorm'
   
@@ -37,23 +216,50 @@ const Body = () => {
             delay={0.2}
             className="w-full mx-auto"
         >
-            <div className="flex flex-col sm:flex-row  gap-[16px] max-w-[656px] text-white mx-auto">
+            <div className="flex flex-col sm:flex-row  gap-[16px] max-w-[656px] text-white mx-auto relative">
+                {/* location input */}
                 <div className="bg-[#262540] w-full sm:max-w-[526px] rounded-[12px] flex items-center py-[16px] px-[24px] mx-auto gap-[16px]">
                     <Search size={20} className="text-white" />
+
                     <input 
-                        className="outline-none text-[20px]"
+                        onChange={(e) => setLocation(e.target.value)}
+                        className="outline-none text-[20px] bg-transparent w-full"
                         type="text" 
-                        name="" 
-                        id="" 
+                        value={location} 
                         placeholder="Search for a place..." 
                     />
                 </div>
                 
+                {/* search button */}
                 <TapButton
+                    onClick={handleSearch} 
+                    // disabled={loading}
                     className="bg-[#4658D9] hover:bg-[#2B1B9C] cursor-pointer py-[16px] px-[24px] rounded-[12px] flex"
                 >
-                    <p className="text-[20px] mx-auto">Search</p>
+                    <p className="text-[20px] mx-auto">{loading ? 'Searching...' : 'Search'}</p>
                 </TapButton>
+
+                {/* Suggestions dropdown */}
+                {suggestions.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-[#262540] rounded-[12px] overflow-hidden z-20 max-w-[526px] border-2 border-red-500">
+                        {suggestions.map((city) => (
+                            <div
+                                key={city.id}
+                                onClick={() => fetchWeatherData(city)}
+                                className="py-3 px-6 hover:bg-[#3C3B5E] cursor-pointer transition-colors"
+                            >
+                                {city.name}, {city.admin1 ? `${city.admin1}, ` : ''}{city.country}
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Error message */}
+                {error && (
+                    <div className="absolute top-full left-0 mt-2 text-red-400 text-sm">
+                        {error}
+                    </div>
+                )}
             </div>
         </FadeInUp>
 
@@ -69,9 +275,10 @@ const Body = () => {
                     <WeatherBackground weatherType={currentWeather} />
                     
                     {/* Content overlay */}
+                    
                     <div className="relative z-10 space-y-[12px]">
-                        <h1 className="text-[28px] font-bold">Berlin, Germany</h1>
-                        <p className="text-[18px] font-500">Friday, Jan 2, 2026</p>
+                        <h1 className="text-[28px] font-bold">{displayName}</h1>
+                        <p className="text-[18px] font-500">{currentDate}</p>
                     </div>
 
                     <div className="relative z-10 flex items-center">
@@ -82,7 +289,7 @@ const Body = () => {
                             animate={floatAnimationReverse}
                             className="text-[96px] font-bold"
                         >
-                            <i>20°</i>
+                            <i>{currentTemp}°</i>
                         </motion.div>
                     </div>
                 </ScaleFade>
