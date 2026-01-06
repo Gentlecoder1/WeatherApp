@@ -7,10 +7,10 @@ import Hourly from './Hourly'
 import Daily from './Daily'
 import Condition from './Condition'
 import WeatherBackground from './WeatherBackground'
+import NoResult from './NoResult'
 import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from '../Animations/motion'
 
-import { useState, useEffect, useRef } from 'react';
-import axios from 'axios'
+import { useEffect } from 'react';
 import { Search  } from "lucide-react"
 import { motion } from "framer-motion"
 import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
@@ -146,55 +146,51 @@ const Body = () => {
                         ))}
                     </ul>
                 )}
-
-                {/* Error message */}
-                {error && (
-                    <div className="absolute top-full left-0 mt-2 text-red-400 text-sm">
-                        {error}
-                    </div>
-                )}
             </div>
         </FadeInUp>
         
-        {/* weathercards and data */}
-        <div className="w-full mx-auto lg:flex space-y-[32px] lg:space-y-0 text-white gap-[32px]">
-            <div className="w-full lg:max-w-[70%] space-y-[32px]">
+        {error ? (
+            <NoResult/>
+        ) : (
+            <div className="w-full mx-auto lg:flex space-y-[32px] lg:space-y-0 text-white gap-[32px]">
+                <div className="w-full lg:max-w-[70%] space-y-[32px]">
 
-                {/* weather info card */}
-                <ScaleFade 
-                    delay={0.3}
-                    className="relative w-full rounded-[20px] flex flex-col sm:flex-row items-center justify-between py-[80px] px-[24px] overflow-hidden"
-                >
-                    {/* Animated Weather Background */}
-                    <WeatherBackground weatherType={currentWeather} />
+                    {/* weather info card */}
+                    <ScaleFade 
+                        delay={0.3}
+                        className="relative w-full rounded-[20px] flex flex-col sm:flex-row items-center justify-between py-[80px] px-[24px] overflow-hidden"
+                    >
+                        {/* Animated Weather Background */}
+                        <WeatherBackground weatherType={currentWeather} />
+                        
+                        {/* Content overlay */}
+
+                        <div className="relative z-10 space-y-[12px]">
+                            <h1 className="text-[28px] font-bold">{displayName}</h1>
+                            <p className="text-[18px] font-500">{currentDate}</p>
+                        </div>
+
+                        <div className="relative z-10 flex items-center">
+                            <motion.div animate={floatAnimation}>
+                                <img src={weatherIcons[currentWeather]} alt={currentWeather} className="w-24 h-24" />
+                            </motion.div>
+                            <motion.div
+                                animate={floatAnimationReverse}
+                                className="text-[96px] font-bold"
+                            >
+                                <i>{currentTemp}°</i>
+                            </motion.div>
+                        </div>
+                    </ScaleFade>
+
+                    <Condition />
                     
-                    {/* Content overlay */}
+                    <Daily />
+                </div>
 
-                    <div className="relative z-10 space-y-[12px]">
-                        <h1 className="text-[28px] font-bold">{displayName}</h1>
-                        <p className="text-[18px] font-500">{currentDate}</p>
-                    </div>
-
-                    <div className="relative z-10 flex items-center">
-                        <motion.div animate={floatAnimation}>
-                            <img src={weatherIcons[currentWeather]} alt={currentWeather} className="w-24 h-24" />
-                        </motion.div>
-                        <motion.div
-                            animate={floatAnimationReverse}
-                            className="text-[96px] font-bold"
-                        >
-                            <i>{currentTemp}°</i>
-                        </motion.div>
-                    </div>
-                </ScaleFade>
-
-                <Condition />
-                
-                <Daily />
+                <Hourly />
             </div>
-
-            <Hourly />
-        </div>
+        )}
     </div>
   )
 }

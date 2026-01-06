@@ -92,7 +92,7 @@ export const useWeatherLogic = () => {
 
                 if (results.length === 0) {
                     setSuggestions([]);
-                    setError('No cities found');
+                    // Don't set error here - it's just no suggestions, not a fatal error
                 } else if (results.length === 1) {
                     fetchWeatherData(results[0]);
                 } else {
