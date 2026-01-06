@@ -50,7 +50,7 @@ const Body = () => {
 
     const { location, setLocation, 
         suggestions, setSuggestions, weatherData, 
-        loading, error, 
+        loading, error, setError,
         searchCities, fetchWeatherData,
         debounceRef, handleSearch
     } = useWeatherLogic();
@@ -60,6 +60,11 @@ const Body = () => {
         if (location.length < 2) {
             setSuggestions([]);
             return; 
+        }
+
+        // Clear error when user starts typing a new search
+        if (error) {
+            setError('');
         }
 
         // Only skip search if location exactly matches current display name

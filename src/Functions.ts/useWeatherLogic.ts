@@ -121,13 +121,14 @@ export const useWeatherLogic = () => {
                 await fetchWeatherData(res.data.results[0]);
             } else {
                 setError("City not found. Please be more specific.");
+                setLocation('');
                 setLoading(false);
             }
         } catch (err) {
             setError("Search failed.");
-            setLoading(false);
+            setLocation('');
+            setLoading(true);
         } finally {
-
             setLoading(false);
         }
     };
@@ -136,7 +137,7 @@ export const useWeatherLogic = () => {
             location, setLocation,
             weatherData,
             suggestions, setSuggestions,
-            error,
+            error, setError,
             loading,
             searchCities,
             fetchWeatherData, debounceRef, 
