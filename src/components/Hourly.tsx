@@ -4,7 +4,7 @@ import { daysOfWeek, hourlyForecast } from './index'
 import { ChevronDown } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react";
-import { FadeInRight, StaggerContainer, StaggerItemX, HoverCard, dropIn, TapButton } from './motion';
+import { FadeInRight, StaggerContainer, StaggerItemX, HoverCard, dropIn, TapButton } from '../Animations/motion';
 
 const Hourly = () => {
 

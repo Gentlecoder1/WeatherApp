@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import Logo from "../assets/Logo.svg"
 import Unit from "./Unit"
 import { useState } from "react";
-import { MotionHeader, FadeInLeft, dropIn } from "./motion";
+import { MotionHeader, FadeInLeft, dropIn } from "../Animations/motion";
 
 const Header = () => {
 

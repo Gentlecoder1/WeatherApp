@@ -1,5 +1,5 @@
 import { conditions } from '.'
-import { StaggerContainer, StaggerItem, HoverCard } from './motion'
+import { StaggerContainer, StaggerItem, HoverCard } from '../Animations/motion'
 
 const Condition = () => {
   return (

@@ -1,5 +1,5 @@
 import { dailyForecast } from '.'
-import { FadeInUp, StaggerContainer, StaggerItemScale, HoverCard } from './motion'
+import { FadeInUp, StaggerContainer, StaggerItemScale, HoverCard } from '../Animations/motion'
 
 const Daily = () => {
   return (

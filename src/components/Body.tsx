@@ -7,7 +7,7 @@ import Hourly from './Hourly'
 import Daily from './Daily'
 import Condition from './Condition'
 import WeatherBackground from './WeatherBackground'
-import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from './motion'
+import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from '../Animations/motion'
 
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
@@ -155,7 +155,8 @@ const Body = () => {
                 )}
             </div>
         </FadeInUp>
-
+        
+        {/* weathercards and data */}
         <div className="w-full mx-auto lg:flex space-y-[32px] lg:space-y-0 text-white gap-[32px]">
             <div className="w-full lg:max-w-[70%] space-y-[32px]">
 
