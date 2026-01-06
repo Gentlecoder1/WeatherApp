@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { motion } from "framer-motion"
 
-type WeatherType = 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm'
+type WeatherType = 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' | 'snowy'
 
 interface WeatherBackgroundProps {
     weatherType: WeatherType
@@ -95,11 +95,60 @@ const Lightning = () => (
     </motion.svg>
 )
 
+interface SnowflakeProps {
+    delay: number
+    duration: number
+    left: string
+    size: number
+}
+
+const Snowflake = ({ delay, duration, left, size }: SnowflakeProps) => (
+    <motion.div
+        className="absolute bg-white rounded-full"
+        style={{ left, width: size, height: size }}
+        initial={{ y: -20, opacity: 0, rotate: 0 }}
+        animate={{ 
+            y: "400px", 
+            opacity: [0, 0.9, 0.9, 0],
+            rotate: 360,
+            x: [0, 15, -15, 10, -10, 0]
+        }}
+        transition={{ 
+            duration, 
+            delay, 
+            repeat: Infinity, 
+            ease: "linear",
+            x: { duration: duration * 0.5, repeat: Infinity, ease: "easeInOut" }
+        }}
+    />
+)
+
+const Snow = () => {
+    const flakes = useMemo(() => {
+        return Array.from({ length: 50 }, (_, i) => ({
+            id: i,
+            left: `${Math.random() * 100}%`,
+            delay: Math.random() * 3,
+            duration: 3 + Math.random() * 2,
+            size: 3 + Math.random() * 5
+        }))
+    }, [])
+
+    return (
+        <div className="absolute inset-0 overflow-hidden">
+            {flakes.map((flake) => (
+                <Snowflake key={flake.id} {...flake} />
+            ))}
+        </div>
+    )
+}
+
 const gradients: Record<WeatherType, string> = {
     sunny: "bg-gradient-to-b from-[#4A90D9] via-[#74B9FF] to-[#87CEEB]",
     cloudy: "bg-gradient-to-b from-[#5D6D7E] via-[#85929E] to-[#ABB2B9]",
     rainy: "bg-gradient-to-b from-[#2C3E50] via-[#34495E] to-[#5D6D7E]",
-    thunderstorm: "bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f3460]"
+    thunderstorm: "bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f3460]",
+    snowy: "bg-gradient-to-b from-[#E8EEF2] via-[#B8C9D9] to-[#8BA4BC]"
 }
 
 const WeatherBackground = ({ weatherType }: WeatherBackgroundProps) => {
@@ -138,6 +187,14 @@ const WeatherBackground = ({ weatherType }: WeatherBackgroundProps) => {
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     />
                     <Lightning />
+                </>
+            )}
+
+            {weatherType === 'snowy' && (
+                <>
+                    <Cloud top="5%" duration={30} />
+                    <Cloud top="12%" duration={25} delay={10} />
+                    <Snow />
                 </>
             )}
         </div>

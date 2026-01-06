@@ -3,6 +3,7 @@ import Sunny from '../assets/Sunny.png'
 import CloudImg from '../assets/cloud.png'
 import RainImg from '../assets/Rain.svg'
 import ThunderstormImg from '../assets/Thunderstorms.svg'
+import SnowyImg from '../assets/Snow.svg'
 import Hourly from './Hourly'
 import Daily from './Daily'
 import Condition from './Condition'
@@ -20,16 +21,22 @@ const weatherIcons = {
     sunny: Sunny,
     cloudy: CloudImg,
     rainy: RainImg,
-    thunderstorm: ThunderstormImg
+    thunderstorm: ThunderstormImg,
+    snowy: SnowyImg
 }
 
-
-
 // Map Open-Meteo weather codes to our weather types
-type WeatherType = 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm';
+type WeatherType = 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' | 'snowy';
 
-const getWeatherType = (code: number | undefined): WeatherType => {
-    if (code === undefined) return 'cloudy';
+const getWeatherType = (code: number | undefined, temp: number | undefined): WeatherType => {
+    // Very cold temperatures (freezing or below) with clear/cloudy sky should show snowy
+    if (temp !== undefined && temp <= 0) {
+        if (code === undefined || code === 0 || [1, 2, 3].includes(code)) {
+            return 'snowy';
+        }
+    }
+    
+    if (code === undefined) return 'sunny';
     
     // Clear sky
     if (code === 0) return 'sunny';
@@ -37,8 +44,11 @@ const getWeatherType = (code: number | undefined): WeatherType => {
     // Mainly clear, partly cloudy, overcast, fog
     if ([1, 2, 3, 45, 48].includes(code)) return 'cloudy';
     
-    // Drizzle, rain, freezing rain, rain showers, snow
-    if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86].includes(code)) return 'rainy';
+    // Snow fall, snow grains, snow showers
+    if ([71, 73, 75, 77, 85, 86].includes(code)) return 'snowy';
+    
+    // Drizzle, rain, freezing rain, rain showers
+    if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return 'rainy';
     
     // Thunderstorm (with or without hail)
     if ([95, 96, 99].includes(code)) return 'thunderstorm';
@@ -97,8 +107,11 @@ const Body = () => {
         year: 'numeric'
     });
 
-    // Get weather type based on API weather code
-    const currentWeather = getWeatherType(weatherData?.current_weather?.weathercode);
+    // Get weather type based on API weather code and temperature
+    const currentWeather = getWeatherType(
+        weatherData?.current_weather?.weathercode,
+        weatherData?.current_weather?.temperature
+    );
   
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-[64px]">
