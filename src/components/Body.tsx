@@ -58,7 +58,7 @@ const mainUrl = `https://api.open-meteo.com/v1/forecast`
 type WeatherType = 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm';
 
 const getWeatherType = (code: number | undefined): WeatherType => {
-    if (code === undefined) return 'sunny';
+    if (code === undefined) return 'cloudy';
     
     // Clear sky
     if (code === 0) return 'sunny';
