@@ -129,7 +129,7 @@ export const useWeatherLogic = () => {
             setError("Search failed.");
             setLoading(false);
         } finally {
-            
+
             setLoading(false);
         }
     };
@@ -137,7 +137,7 @@ export const useWeatherLogic = () => {
         return {
             location, setLocation,
             weatherData,
-            suggestions,
+            suggestions, setSuggestions,
             error,
             loading,
             searchCities,

@@ -49,7 +49,7 @@ const getWeatherType = (code: number | undefined): WeatherType => {
 const Body = () => {
 
     const { location, setLocation, 
-        suggestions, weatherData, 
+        suggestions, setSuggestions, weatherData, 
         loading, error, 
         searchCities, fetchWeatherData,
         debounceRef, handleSearch
@@ -58,6 +58,7 @@ const Body = () => {
     // debounce for
     useEffect(() => {
         if (location.length < 2 || weatherData?.displayName.startsWith(location)) {
+            setSuggestions([]);
             return; 
         }
 
@@ -127,7 +128,7 @@ const Body = () => {
 
                 {/* Suggestions dropdown */}
                 {suggestions.length > 0 && (
-                    <ul className="absolute top-full left-0 right-0 mt-2 bg-[#262540] rounded-[12px] overflow-hidden z-20 max-w-[526px]">
+                    <ul className="absolute top-full left-0 right-0 mt-2 bg-[#262540] rounded-[12px] z-20 max-w-[526px] max-h-[200px] overflow-y-auto custom-scrollbar">
                         {suggestions.map((city) => (
                             <li
                                 key={city.id}
