@@ -48,11 +48,8 @@ export const useWeatherLogic = () => {
     const fetchWeatherData = async (city: City) => {
             setSuggestions([]);
             setLoading(true);
-            setLocation(city.name);
 
-            // Update input to reflect exactly what was picked
             const fullName = `${city.name}${city.admin1 ? `, ${city.admin1}` : ''}, ${city.country}`;
-            setLocation(fullName);
     
             try {
                 const weatherRes = await axios.get(mainUrl, {
@@ -71,6 +68,7 @@ export const useWeatherLogic = () => {
                 displayName: fullName
             });
                 setError('');
+                setLocation(''); // Clear input after successful search
             } catch (err) {
                 console.error("Weather error", err);
                 setError("Failed to fetch weather data");

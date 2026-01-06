@@ -57,9 +57,15 @@ const Body = () => {
    
     // debounce for
     useEffect(() => {
-        if (location.length < 2 || weatherData?.displayName.startsWith(location)) {
+        if (location.length < 2) {
             setSuggestions([]);
             return; 
+        }
+
+        // Only skip search if location exactly matches current display name
+        if (weatherData?.displayName.toLowerCase() === location.toLowerCase()) {
+            setSuggestions([]);
+            return;
         }
 
         if (debounceRef.current) clearTimeout(debounceRef.current);
