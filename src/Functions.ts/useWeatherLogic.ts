@@ -17,6 +17,8 @@ interface WeatherData {
     hourly: {
         time: string[];
         temperature_2m: number[];
+        relative_humidity_2m: number[];
+        precipitation: number[];
     };
     daily: {
         time: string[];
@@ -32,11 +34,11 @@ interface WeatherData {
         windspeed: number;
         // precipitation: number;
     };
-    current?: {
-        apparent_temperature: number;
-        relative_humidity_2m: number;
-        precipitation: number;
-    };
+    // current?: {
+    //     temperature_2m: number;
+    //     relative_humidity_2m: number;
+    //     precipitation: number;
+    // };
 }
 
 // Weather type
@@ -96,7 +98,7 @@ export const useWeatherLogic = () => {
                 params: {
                     latitude: city.latitude,
                     longitude: city.longitude,
-                    hourly: 'temperature_2m',
+                    hourly: 'temperature_2m,relative_humidity_2m,precipitation',
                     daily: 'temperature_2m_max,temperature_2m_min',
                     current_weather: true,
                     timezone: 'auto'
@@ -225,9 +227,9 @@ export const useWeatherLogic = () => {
 
     // Conditions data from API (from 'current' object)
     const windSpeed = weatherData?.current_weather?.windspeed;
-    const apparentTemp = weatherData?.current?.apparent_temperature;
-    const relativeHum = weatherData?.current?.relative_humidity_2m;
-    const precip = weatherData?.current?.precipitation;
+    const apparentTemp = weatherData?.hourly?.temperature_2m?.[0];
+    const relativeHum = weatherData?.hourly?.relative_humidity_2m?.[0];
+    const precip = weatherData?.hourly?.precipitation?.[0];
 
     const conditions = [
         { id: 1, value: apparentTemp },
