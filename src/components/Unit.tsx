@@ -1,20 +1,16 @@
-import React, { useState } from "react"
+import React from "react"
 import clsx from "clsx"
 import { unitTemp } from './index'
 
 
-const Unit = () => {
-        
-    const [selectedUnits, setSelectedUnits] = useState<Record<number, number>>(() => {
-        const defaults: Record<number, number> = {}
-        unitTemp.forEach((category, index) => {
-            defaults[index] = category.units[0].id // default to first unit's id
-        })
-        return defaults
-    })
+interface UnitProps {
+  selectedUnits: Record<number, number>;
+  setSelectedUnits: React.Dispatch<React.SetStateAction<Record<number, number>>>;
+}
 
+const Unit = ({ selectedUnits, setSelectedUnits }: UnitProps) => {
     const handleSelect = (categoryIndex: number, unitId: number) => {
-        setSelectedUnits(prev => ({ ...prev, [categoryIndex]: unitId }))
+        setSelectedUnits((prev) => ({ ...prev, [categoryIndex]: unitId }))
     }
 
   return (
@@ -22,7 +18,6 @@ const Unit = () => {
         <div className='text-[18px] font-500 py-[10px] px-[8px]'>Switch to Imperial</div>
 
         <div className='flex flex-col gap-[10px]'>
-
             {unitTemp.map(({ title, units }, index) => (
                 <React.Fragment key={index}>
                     <div className='flex flex-col gap-[8px] cursor-pointer'>

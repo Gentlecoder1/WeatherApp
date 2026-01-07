@@ -7,7 +7,12 @@ import Unit from "./Unit"
 import { useState } from "react";
 import { MotionHeader, FadeInLeft, dropIn } from "../Animations/motion";
 
-const Header = () => {
+interface HeaderProps {
+  selectedUnits: Record<number, number>;
+  setSelectedUnits: React.Dispatch<React.SetStateAction<Record<number, number>>>;
+}
+
+const Header = ({ selectedUnits, setSelectedUnits }: HeaderProps) => {
 
   const [openUnit, setOpenUnit] = useState(false);
 
@@ -45,7 +50,7 @@ const Header = () => {
               exit="exit"
               className="flex justify-end"
             >
-              <Unit />
+              <Unit selectedUnits={selectedUnits} setSelectedUnits={setSelectedUnits} />
             </motion.div>
           )}
         </AnimatePresence>

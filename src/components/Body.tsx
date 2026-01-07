@@ -16,9 +16,13 @@ import { convertTemp, convertWind, convertPrecip } from '../utils/unitConversion
 // external import
 import { Search } from "lucide-react"
 import { motion } from "framer-motion"
+// import { unitTemp } from '.';
 
+interface BodyProps {
+  selectedUnits: Record<number, number>;
+}
 
-const Body = () => {
+const Body = ({ selectedUnits }: BodyProps) => {
     const { 
         location, setLocation, 
         suggestions, 
@@ -33,9 +37,22 @@ const Body = () => {
         conditions
     } = useWeatherLogic();
 
-    const [tempUnit, setTempUnit] = useState<'°C' | '°F'>('°C');
-    const [windUnit, setWindUnit] = useState<'km/h' | 'mph'>('km/h');
-    const [precipUnit, setPrecipUnit] = useState<'mm' | 'in'>('mm');
+    // Helper to get unit string from selectedUnits
+    // const getUnit = (categoryIndex: number) => {
+    //   const unitObj = unitTemp[categoryIndex].units.find(u => u.id === selectedUnits[categoryIndex]);
+    //   return unitObj ? unitObj.name.match(/\((.*?)\)/)?.[1] || '' : '';
+    // };
+  
+    // Map selectedUnits to actual unit values for Condition
+    const tempUnit = selectedUnits[0] === 1 ? '°C' : '°F';
+    const windUnit = selectedUnits[1] === 1 ? 'km/h' : 'mph';
+    const precipUnit = selectedUnits[2] === 1 ? 'mm' : 'in';
+
+    // Ensure all condition values are string or number
+    const safeConditions = conditions.map(c => ({
+      id: c.id,
+      value: typeof c.value === 'undefined' ? '--' : c.value
+    }));
   
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-[64px]">
@@ -126,11 +143,11 @@ const Body = () => {
                     </ScaleFade>
 
                     <Condition 
-                        conditions={conditions}
+                        conditions={safeConditions}
                         tempUnit={tempUnit}
                         windUnit={windUnit}
                         precipUnit={precipUnit}
-                        />
+                    />
                     <Daily />
                 </div>
 

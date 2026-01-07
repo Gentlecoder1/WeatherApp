@@ -1,13 +1,11 @@
-import Header from './components/Header';
-import Body from './components/Body';
+import Home from './Home';
 
 function App() {
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <Header />
-      <Body />
-    </div>
+    <>
+      <Home />
+    </>
   )
 }
 

@@ -29,16 +29,8 @@ interface WeatherData {
     current_weather?: {
         temperature: number;
         weathercode: number;
-        // apparent_temperature: number;
-        // relative_humidity: number;
         windspeed: number;
-        // precipitation: number;
     };
-    // current?: {
-    //     temperature_2m: number;
-    //     relative_humidity_2m: number;
-    //     precipitation: number;
-    // };
 }
 
 // Weather type
