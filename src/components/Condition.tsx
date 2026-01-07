@@ -3,28 +3,26 @@ import { StaggerContainer, StaggerItem, HoverCard } from '../Animations/motion'
 import { convertTemp, convertWind, convertPrecip } from '../utils/unitConversion';
 
 interface ConditionProps {
-  conditions: { id: number; value: number | string }[];
-  tempUnit: '°C' | '°F';
-  windUnit: 'km/h' | 'mph';
-  precipUnit: 'mm' | 'in';
+  conditions: { id: number; value: number | string; unit: string }[];
 }
-const Condition = ({ conditions, tempUnit, windUnit, precipUnit }: ConditionProps) => {
+const Condition = ({ conditions }: ConditionProps) => {
   return (
     <StaggerContainer 
       staggerDelay={0.15}
       childrenDelay={0.6}
       className='w-full grid grid-cols-2 sm:grid-cols-4 gap-[24px]'
     >
-        {conditionTitles.map(({ id, title, unit }) => {
+        {conditionTitles.map(({ id, title }) => {
             const condition = conditions.find(c => c.id === id);
             let value = condition?.value ?? '--';
+            const unit = condition?.unit ?? '';
+            // Apply conversion based on unit
             if (typeof value === 'number') {
-              if (id === 1) value = convertTemp(value, tempUnit);
-              if (id === 3) value = convertWind(value, windUnit);
-              if (id === 4) value = convertPrecip(value, precipUnit);
+              if (id === 1 && (unit === '°F' || unit === '°C')) value = convertTemp(value, unit as '°C' | '°F');
+              if (id === 3 && (unit === 'mph' || unit === 'km/h')) value = convertWind(value, unit as 'km/h' | 'mph');
+              if (id === 4 && (unit === 'in' || unit === 'mm')) value = convertPrecip(value, unit as 'mm' | 'in');
             }
             const displayValue = typeof value === 'number' ? Math.round(value) : value;
-            
             return (
                 <StaggerItem key={id}>
                     <HoverCard

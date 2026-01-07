@@ -14,7 +14,7 @@ const Unit = ({ selectedUnits, setSelectedUnits }: UnitProps) => {
     }
 
   return (
-    <div className='w-[214px] text-white bg-[#262540] border border-[#3C3B5E] py-[10px] px-[8px] rounded-[12px] absolute'>
+    <div className='w-[214px] text-white bg-[#262540] border border-[#3C3B5E] py-[10px] px-[8px] rounded-[12px] absolute z-50'>
         <div className='text-[18px] font-500 py-[10px] px-[8px]'>Switch to Imperial</div>
 
         <div className='flex flex-col gap-[10px]'>

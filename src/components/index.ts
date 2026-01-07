@@ -34,10 +34,10 @@ export const unitTemp = [
 
 // Conditions titles - values come from API via useWeatherLogic hook
 export const conditionTitles = [
-    { id: 1, title: "Feels like", unit: "°" },
-    { id: 2, title: "Humidity", unit: "%" },
-    { id: 3, title: "Wind", unit: "km/h" },
-    { id: 4, title: "Precipitation", unit: "mm" }
+    { id: 1, title: "Feels like" },
+    { id: 2, title: "Humidity" },
+    { id: 3, title: "Wind" },
+    { id: 4, title: "Precipitation" }
 ]
 
 export const daysOfWeek = [

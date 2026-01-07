@@ -47,11 +47,14 @@ const Body = ({ selectedUnits }: BodyProps) => {
     const tempUnit = selectedUnits[0] === 1 ? '°C' : '°F';
     const windUnit = selectedUnits[1] === 1 ? 'km/h' : 'mph';
     const precipUnit = selectedUnits[2] === 1 ? 'mm' : 'in';
+    // Map units for display
+    const conditionUnits = [tempUnit, '%', windUnit, precipUnit];
 
-    // Ensure all condition values are string or number
-    const safeConditions = conditions.map(c => ({
+    // Ensure all condition values are string or number and attach dynamic unit
+    const safeConditions = conditions.map((c, i) => ({
       id: c.id,
-      value: typeof c.value === 'undefined' ? '--' : c.value
+      value: typeof c.value === 'undefined' ? '--' : c.value,
+      unit: conditionUnits[i]
     }));
   
   return (
@@ -144,9 +147,6 @@ const Body = ({ selectedUnits }: BodyProps) => {
 
                     <Condition 
                         conditions={safeConditions}
-                        tempUnit={tempUnit}
-                        windUnit={windUnit}
-                        precipUnit={precipUnit}
                     />
                     <Daily />
                 </div>
