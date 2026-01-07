@@ -28,7 +28,8 @@ const Body = () => {
         currentTemp,
         displayName,
         currentDate,
-        currentWeather
+        currentWeather,
+        conditions
     } = useWeatherLogic();
   
   return (
@@ -119,7 +120,7 @@ const Body = () => {
                         </div>
                     </ScaleFade>
 
-                    <Condition />
+                    <Condition conditions={conditions} />
                     
                     <Daily />
                 </div>

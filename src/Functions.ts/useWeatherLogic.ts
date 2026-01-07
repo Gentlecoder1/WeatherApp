@@ -27,6 +27,15 @@ interface WeatherData {
     current_weather?: {
         temperature: number;
         weathercode: number;
+        // apparent_temperature: number;
+        // relative_humidity: number;
+        windspeed: number;
+        // precipitation: number;
+    };
+    current?: {
+        apparent_temperature: number;
+        relative_humidity_2m: number;
+        precipitation: number;
     };
 }
 
@@ -88,16 +97,16 @@ export const useWeatherLogic = () => {
                     latitude: city.latitude,
                     longitude: city.longitude,
                     hourly: 'temperature_2m',
-                    daily: ['temperature_2m_max', 'temperature_2m_min'],
+                    daily: 'temperature_2m_max,temperature_2m_min',
                     current_weather: true,
                     timezone: 'auto'
                 }
             });
-
+            console.log('API Response:', weatherRes.data);
             setWeatherData({
-            ...weatherRes.data,
-            displayName: fullName
-        });
+                ...weatherRes.data,
+                displayName: fullName
+            });
             setError('');
             setLocation(''); // Clear input after successful search
         } catch (err) {
@@ -124,7 +133,6 @@ export const useWeatherLogic = () => {
 
             if (results.length === 0) {
                 setSuggestions([]);
-                // Don't set error here - it's just no suggestions, not a fatal error
             } else if (results.length === 1) {
                 fetchWeatherData(results[0]);
             } else {
@@ -212,6 +220,22 @@ export const useWeatherLogic = () => {
         weatherData?.current_weather?.temperature
     );
 
+    // Debug: log weatherData to see what's available
+    console.log('weatherData:', weatherData);
+
+    // Conditions data from API (from 'current' object)
+    const windSpeed = weatherData?.current_weather?.windspeed;
+    const apparentTemp = weatherData?.current?.apparent_temperature;
+    const relativeHum = weatherData?.current?.relative_humidity_2m;
+    const precip = weatherData?.current?.precipitation;
+
+    const conditions = [
+        { id: 1, value: apparentTemp },
+        { id: 2, value: relativeHum },
+        { id: 3, value: windSpeed },
+        { id: 4, value: precip }
+    ];
+
     return {
         location, setLocation,
         weatherData,
@@ -225,6 +249,7 @@ export const useWeatherLogic = () => {
         currentTemp,
         displayName,
         currentDate,
-        currentWeather
+        currentWeather,
+        conditions
     }
 }
