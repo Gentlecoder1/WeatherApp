@@ -1,4 +1,4 @@
-// import React from 'react'
+import React, { useState } from 'react'
 // assets import
 
 
@@ -10,11 +10,12 @@ import WeatherBackground from './WeatherBackground'
 import NoResult from './NoResult'
 import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from '../Animations/motion'
 import { weatherIcons } from '.'
+import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
+import { convertTemp, convertWind, convertPrecip } from '../utils/unitConversion';
 
 // external import
 import { Search } from "lucide-react"
 import { motion } from "framer-motion"
-import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
 
 
 const Body = () => {
@@ -31,6 +32,10 @@ const Body = () => {
         currentWeather,
         conditions
     } = useWeatherLogic();
+
+    const [tempUnit, setTempUnit] = useState<'°C' | '°F'>('°C');
+    const [windUnit, setWindUnit] = useState<'km/h' | 'mph'>('km/h');
+    const [precipUnit, setPrecipUnit] = useState<'mm' | 'in'>('mm');
   
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-[64px]">
@@ -120,8 +125,12 @@ const Body = () => {
                         </div>
                     </ScaleFade>
 
-                    <Condition conditions={conditions} />
-                    
+                    <Condition 
+                        conditions={conditions}
+                        tempUnit={tempUnit}
+                        windUnit={windUnit}
+                        precipUnit={precipUnit}
+                        />
                     <Daily />
                 </div>
 
