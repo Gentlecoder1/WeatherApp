@@ -1,6 +1,7 @@
 import Sunny from '../assets/Sunny.png'
 import Cloud from '../assets/cloud.png'
 import Rain from '../assets/Rain.svg'
+import Snowy from '../assets/Snow.svg'
 import Thunderstorms from '../assets/Thunderstorms.svg'
 import PartlyCloudy from '../assets/PartlyCloudy.svg'
 
@@ -166,3 +167,12 @@ export const hourlyForecast = [
         temp: 12
     }
 ]
+
+ // Weather icon mapping
+export const weatherIcons = {
+    sunny: Sunny,
+    cloudy: Cloud,
+    rainy: Rain,
+    thunderstorm: Thunderstorms,
+    snowy: Snowy
+}

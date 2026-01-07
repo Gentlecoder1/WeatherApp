@@ -1,117 +1,35 @@
 // import React from 'react'
-import Sunny from '../assets/Sunny.png'
-import CloudImg from '../assets/cloud.png'
-import RainImg from '../assets/Rain.svg'
-import ThunderstormImg from '../assets/Thunderstorms.svg'
-import SnowyImg from '../assets/Snow.svg'
+// assets import
+
+
+// components imports
 import Hourly from './Hourly'
 import Daily from './Daily'
 import Condition from './Condition'
 import WeatherBackground from './WeatherBackground'
 import NoResult from './NoResult'
 import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from '../Animations/motion'
+import { weatherIcons } from '.'
 
-import { useEffect } from 'react';
-import { Search  } from "lucide-react"
+// external import
+import { Search } from "lucide-react"
 import { motion } from "framer-motion"
 import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
 
-// Weather icon mapping
-const weatherIcons = {
-    sunny: Sunny,
-    cloudy: CloudImg,
-    rainy: RainImg,
-    thunderstorm: ThunderstormImg,
-    snowy: SnowyImg
-}
-
-// Map Open-Meteo weather codes to our weather types
-type WeatherType = 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' | 'snowy';
-
-const getWeatherType = (code: number | undefined, temp: number | undefined): WeatherType => {
-    // Very cold temperatures (freezing or below) with clear/cloudy sky should show snowy
-    if (temp !== undefined && temp <= 0) {
-        if (code === undefined || code === 0 || [1, 2, 3].includes(code)) {
-            return 'snowy';
-        }
-    }
-    
-    if (code === undefined) return 'sunny';
-    
-    // Clear sky
-    if (code === 0) return 'sunny';
-    
-    // Mainly clear, partly cloudy, overcast, fog
-    if ([1, 2, 3, 45, 48].includes(code)) return 'cloudy';
-    
-    // Snow fall, snow grains, snow showers
-    if ([71, 73, 75, 77, 85, 86].includes(code)) return 'snowy';
-    
-    // Drizzle, rain, freezing rain, rain showers
-    if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return 'rainy';
-    
-    // Thunderstorm (with or without hail)
-    if ([95, 96, 99].includes(code)) return 'thunderstorm';
-    
-    return 'sunny'; // default
-};
 
 const Body = () => {
-
-    const { location, setLocation, 
-        suggestions, setSuggestions, weatherData, 
-        loading, error, setError,
-        searchCities, fetchWeatherData,
-        debounceRef, handleSearch
+    const { 
+        location, setLocation, 
+        suggestions, 
+        loading, error,
+        fetchWeatherData,
+        handleSearch,
+        // Computed values
+        currentTemp,
+        displayName,
+        currentDate,
+        currentWeather
     } = useWeatherLogic();
-   
-    // debounce for
-    useEffect(() => {
-        if (location.length < 2) {
-            setSuggestions([]);
-            return; 
-        }
-
-        // Clear error when user starts typing a new search
-        if (error) {
-            setError('');
-        }
-
-        // Only skip search if location exactly matches current display name
-        if (weatherData?.displayName.toLowerCase() === location.toLowerCase()) {
-            setSuggestions([]);
-            return;
-        }
-
-        if (debounceRef.current) clearTimeout(debounceRef.current);
-        debounceRef.current = setTimeout(() => {
-            searchCities(location);
-        }, 400);
-
-        return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
-    }, [location])
-
-    // Get current temperature from weather data
-    const currentTemp = weatherData?.current_weather?.temperature 
-        ? Math.round(weatherData.current_weather.temperature) 
-        : '---';
-
-    // Get display name or default
-    const displayName = weatherData?.displayName || "---";
-
-    // Format current date
-    const currentDate = new Date().toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-    });
-
-    // Get weather type based on API weather code and temperature
-    const currentWeather = getWeatherType(
-        weatherData?.current_weather?.weathercode,
-        weatherData?.current_weather?.temperature
-    );
   
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-[64px]">
