@@ -1,24 +1,28 @@
 import Days from './Days';
 import { hourlyForecast } from './index'
 import { FadeInRight, StaggerContainer, StaggerItemX, HoverCard, dropIn, TapButton } from '../Animations/motion';
-import { useWeatherLogic } from '../Functions.ts/useWeatherLogic';
 
 import { ChevronDown } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState, useEffect } from "react";
 
-const Hourly = () => {
-
-  const { dailyData } = useWeatherLogic();
+const Hourly = ({ hourlyData, daysOfWeek }: any) => {
   
   const [openDay, setOpenDay] = useState(false);
-  const [selectedDay, setSelectedDay] = useState<any>(() => dailyData?.[0] ?? null);
+  const [selectedDay, setSelectedDay] = useState<any>(daysOfWeek[0]);
 
-  // useEffect(() => {
-  //   if (!selectedDay && daysOfWeek?.length) {
-  //     setSelectedDay(daysOfWeek[0]);
-  //   }
-  // }, [daysOfWeek, selectedDay]);
+  // for the selected day
+  useEffect(() => {
+    if (!selectedDay && daysOfWeek?.length) {
+      setSelectedDay(daysOfWeek[0]);
+    }
+  }, [daysOfWeek, selectedDay]);
+
+  // filter the data from the api based of the selected day
+  const filteredHourly = hourlyData.filter((item: any) => {
+    const itemDay = new Date(item.time).toLocaleDateString('en-US', { weekday: 'long' });
+    return itemDay === selectedDay.name;
+  });
 
   return (
     <FadeInRight 
@@ -63,18 +67,18 @@ const Hourly = () => {
           childrenDelay={0.5}
           className='flex flex-col gap-[16px]'
         >
-          {hourlyForecast.map(({ id, time, icon, temp })=> (
+          {filteredHourly.map(({ id, time, icon, temp })=> (
             <StaggerItemX key={id}>
               <HoverCard
                 scale={1.05}
                 lift={0}
                 className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]'
               >
-                  <div className='flex items-center gap-[8px]'>
-                      <img src={icon} className='w-[40px] h-[40px]' alt="" />
-                      <p className='text-[20px] font-medium'>{time}</p>
-                  </div>
-                  <p className='text-[16px] font-medium'>{temp}°</p>
+                <div className='flex items-center gap-[8px]'>
+                    <img src={icon} className='w-[40px] h-[40px]' alt="" />
+                    <p className='text-[20px] font-medium'>{time}</p>
+                </div>
+                <p className='text-[16px] font-medium'>{temp}°</p>
               </HoverCard>
             </StaggerItemX>
           ))}

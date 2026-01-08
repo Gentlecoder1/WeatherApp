@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios'
+import { getOrderedWeekDays } from '../utils/data';
+
 
 // Type for city from geocoding API
 interface City {
@@ -243,9 +245,7 @@ export const useWeatherLogic = () => {
         };
     }) : [];
 
-    const daysOfWeek = dailyData
-    ? dailyData.map((day, idx) => ({ id: idx + 1, name: day.time }))
-    : Array(7).fill({ name: '--' }).map((_, idx) => ({ id: idx + 1, name: '--' }));
+    const daysOfWeek = getOrderedWeekDays;
 
     const hourlyData = weatherData?.hourly ? weatherData.hourly.time.map((time, index) => ({
         time,
