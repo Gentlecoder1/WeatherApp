@@ -1,26 +1,24 @@
 import Days from './Days';
 import { hourlyForecast } from './index'
-import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
+import { FadeInRight, StaggerContainer, StaggerItemX, HoverCard, dropIn, TapButton } from '../Animations/motion';
+import { useWeatherLogic } from '../Functions.ts/useWeatherLogic';
 
 import { ChevronDown } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
-import { useState } from "react";
-import { FadeInRight, StaggerContainer, StaggerItemX, HoverCard, dropIn, TapButton } from '../Animations/motion';
-
-
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const Hourly = () => {
-  const { daysOfWeek } = useWeatherLogic();
-  const [openDay, setOpenDay] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(daysOfWeek[0] || { id: 1, name: '--' });
 
-  // Update selectedDay if daysOfWeek changes (e.g., after data loads)
-  useEffect(() => {
-    if (daysOfWeek && daysOfWeek[0] && daysOfWeek[0].name !== selectedDay.name) {
-      setSelectedDay(daysOfWeek[0]);
-    }
-  }, [daysOfWeek]);
+  const { dailyData } = useWeatherLogic();
+  
+  const [openDay, setOpenDay] = useState(false);
+  const [selectedDay, setSelectedDay] = useState<any>(() => dailyData?.[0] ?? null);
+
+  // useEffect(() => {
+  //   if (!selectedDay && daysOfWeek?.length) {
+  //     setSelectedDay(daysOfWeek[0]);
+  //   }
+  // }, [daysOfWeek, selectedDay]);
 
   return (
     <FadeInRight 
@@ -34,7 +32,7 @@ const Hourly = () => {
                 onClick={() => setOpenDay(!openDay)}
                 className="bg-[#3C3B5E] rounded-[8px] flex items-center gap-[12px] px-[16px] py-[8px] sm:px-[16px] sm:py-[12px] cursor-pointer"
             >
-                <p className="text-[14px] sm:text-[16px] font-medium">{selectedDay?.name || '--'}</p>
+                <p className="text-[14px] sm:text-[16px] font-medium">{selectedDay?.name ?? '--'}</p>
 
                 <ChevronDown className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px]" />
             </TapButton>

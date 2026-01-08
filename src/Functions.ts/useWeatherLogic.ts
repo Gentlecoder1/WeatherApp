@@ -91,7 +91,7 @@ export const useWeatherLogic = () => {
                     latitude: city.latitude,
                     longitude: city.longitude,
                     hourly: 'temperature_2m,relative_humidity_2m,precipitation',
-                    daily: 'temperature_2m_max,temperature_2m_min,time',
+                    daily: 'temperature_2m_max,temperature_2m_min',
                     current_weather: true,
                     timezone: 'auto'
                 }
@@ -103,9 +103,11 @@ export const useWeatherLogic = () => {
             });
             setError('');
             setLocation(''); // Clear input after successful search
-        } catch (err) {
+        } catch (err: any) {
             console.error("Weather error", err);
             setError("Failed to fetch weather data");
+            console.log("STATUS:", err.response?.status);
+            console.log("API ERROR:", err.response?.data);
         } finally {
             setLoading(false);
         }
@@ -245,6 +247,13 @@ export const useWeatherLogic = () => {
     ? dailyData.map((day, idx) => ({ id: idx + 1, name: day.time }))
     : Array(7).fill({ name: '--' }).map((_, idx) => ({ id: idx + 1, name: '--' }));
 
+    const hourlyData = weatherData?.hourly ? weatherData.hourly.time.map((time, index) => ({
+        time,
+        temperature: Math.round(weatherData.hourly.temperature_2m[index]),
+        humidity: Math.round(weatherData.hourly.relative_humidity_2m[index]),
+        precipitation: Math.round(weatherData.hourly.precipitation[index] * 100) / 100 // round to 2 decimals
+    })) : [];
+
     return {
         location, setLocation,
         weatherData,
@@ -261,6 +270,7 @@ export const useWeatherLogic = () => {
         currentWeather,
         conditions,
         dailyData,
-        daysOfWeek
+        daysOfWeek,
+        hourlyData
     }
 }

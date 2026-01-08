@@ -3,7 +3,7 @@ import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
 
 interface Day {
     id: number
-    name: string
+    time: string
 }
 
 interface DaysProps {
@@ -13,15 +13,12 @@ interface DaysProps {
 
 const Days = ({ selectedDay, onSelect }: DaysProps) => {
 
-    const { daysOfWeek } = useWeatherLogic();
-    
-    
-
+    const { dailyData } = useWeatherLogic();
 
   return (
     <div className='w-[214px] text-white bg-[#262540] border border-[#3C3B5E] py-[10px] px-[8px] rounded-[12px] absolute'>
         <ul>
-            {daysOfWeek.map((day) => (
+            {dailyData.map((day) => (
                 <li 
                     key={day.id}
                     onClick={() => onSelect(day)}
@@ -32,7 +29,7 @@ const Days = ({ selectedDay, onSelect }: DaysProps) => {
                             : ""
                     )}
                 >
-                    {day.name}
+                    {day.time}
                 </li>
             ))}
         </ul>

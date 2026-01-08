@@ -11,10 +11,6 @@ import PartlyCloudy from '../assets/PartlyCloudy.svg'
 const Daily = () => {
   const { dailyData } = useWeatherLogic();
 
-  // const daysOfWeek = dailyData
-  //   ? dailyData.map((day, idx) => ({ id: idx + 1, name: day.time }))
-  //   : Array(7).fill({ name: '--' }).map((_, idx) => ({ id: idx + 1, name: '--' }));
-
   const icons = [Sunny, Cloud, Rain, Thunderstorms, Sunny, PartlyCloudy, Rain];
   const dailyForecast = dailyData
     ? dailyData.map((day, idx) => ({
