@@ -1,7 +1,37 @@
-import { dailyForecast } from '.'
+import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
 import { FadeInUp, StaggerContainer, StaggerItemScale, HoverCard } from '../Animations/motion'
 
+import Sunny from '../assets/Sunny.png'
+import Cloud from '../assets/cloud.png'
+import Rain from '../assets/Rain.svg'
+import Snowy from '../assets/Snow.svg'
+import Thunderstorms from '../assets/Thunderstorms.svg'
+import PartlyCloudy from '../assets/PartlyCloudy.svg'
+
 const Daily = () => {
+  const { dailyData } = useWeatherLogic();
+
+  // const daysOfWeek = dailyData
+  //   ? dailyData.map((day, idx) => ({ id: idx + 1, name: day.time }))
+  //   : Array(7).fill({ name: '--' }).map((_, idx) => ({ id: idx + 1, name: '--' }));
+
+  const icons = [Sunny, Cloud, Rain, Thunderstorms, Sunny, PartlyCloudy, Rain];
+  const dailyForecast = dailyData
+    ? dailyData.map((day, idx) => ({
+        id: idx + 1,
+        icon: icons[idx],
+        day: day.time,
+        high: Math.round(day.high),
+        low: Math.round(day.low),
+      }))
+    : Array(7).fill({}).map((_, idx) => ({
+        id: idx + 1,
+        icon: icons[idx],
+        day: '--',
+        high: '--',
+        low: '--',
+      }));
+
   return (
     <FadeInUp 
       delay={0.7}

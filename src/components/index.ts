@@ -5,6 +5,7 @@ import Snowy from '../assets/Snow.svg'
 import Thunderstorms from '../assets/Thunderstorms.svg'
 import PartlyCloudy from '../assets/PartlyCloudy.svg'
 
+
 export const unitTemp = [
     {
         id: 1,
@@ -40,115 +41,115 @@ export const conditionTitles = [
     { id: 4, title: "Precipitation" }
 ]
 
-export const daysOfWeek = [
-    { id: 1, name: 'Sunday' },
-    { id: 2, name: 'Monday' },
-    { id: 3, name: 'Tuesday' },
-    { id: 4, name: 'Wednesday' },
-    { id: 5, name: 'Thursday' },
-    { id: 6, name: 'Friday' },
-    { id: 7, name: 'Saturday' }
-]
+// export const daysOfWeek = [
+//     { id: 1, name: 'Sunday' },
+//     { id: 2, name: 'Monday' },
+//     { id: 3, name: 'Tuesday' },
+//     { id: 4, name: 'Wednesday' },
+//     { id: 5, name: 'Thursday' },
+//     { id: 6, name: 'Friday' },
+//     { id: 7, name: 'Saturday' }
+// ]
 
-export const dailyForecast = [
-    {
-        id: 1,
-        day: 'Tue',
-        icon: Sunny,
-        high: 20,
-        low: 10
-    },
-    {
-        id: 2,
-        day: 'Wed',
-        icon: Cloud,
-        high: 18,
-        low: 9
-    },
-    {  
-        id: 3,
-        day: 'Thu',
-        icon: Rain,
-        high: 16,
-        low: 8
-    },
-    {
-        id: 4,
-        day: 'Fri',
-        icon: Thunderstorms,
-        high: 15,
-        low: 7
-    },
-    {
-        id: 5,
-        day: 'Sat',
-        icon: Sunny,
-        high: 22,
-        low: 11
-    },
-    {
-        id: 6,
-        day: 'Sun',
-        icon: PartlyCloudy,
-        high: 19,
-        low: 10
-    },
-    {
-        id: 7,
-        day: 'Mon',
-        icon: Rain,
-        high: 17,
-        low: 9
-    }
-]
+// export const dailyForecast = [
+//     {
+//         id: 1,
+//         icon: Sunny,
+//         day: dailyData ? dailyData[0].time : '--',
+//         high: dailyData ? Math.round(dailyData[0].high) : '--',
+//         low: dailyData ? Math.round(dailyData[0].low) : '--'
+//     },
+//     {
+//         id: 2,
+//         icon: Cloud,
+//         day: dailyData ? dailyData[1].time : '--',
+//         high: dailyData ? Math.round(dailyData[1].high) : '--',
+//         low: dailyData ? Math.round(dailyData[1].low) : '--'
+//     },
+//     {  
+//         id: 3,
+//         icon: Rain,
+//         day: dailyData ? dailyData[2].time : '--',
+//         high: dailyData ? Math.round(dailyData[2].high) : '--',
+//         low: dailyData ? Math.round(dailyData[2].low) : '--'
+//     },
+//     {
+//         id: 4,
+//         icon: Thunderstorms,
+//         day: dailyData ? dailyData[3].time : '--',
+//         high: dailyData ? Math.round(dailyData[3].high) : '--',
+//         low: dailyData ? Math.round(dailyData[3].low) : '--'
+//     },
+//     {
+//         id: 5,
+//         icon: Sunny,
+//         day: dailyData ? dailyData[4].time : '--',
+//         high: dailyData ? Math.round(dailyData[4].high) : '--',
+//         low: dailyData ? Math.round(dailyData[4].low) : '--'
+//     },
+//     {
+//         id: 6,
+//         icon: PartlyCloudy,
+//         day: dailyData ? dailyData[5].time : '--',
+//         high: dailyData ? Math.round(dailyData[5].high) : '--',
+//         low: dailyData ? Math.round(dailyData[5].low) : '--'
+//     },
+//     {
+//         id: 7,
+//         icon: Rain,
+//         day: dailyData ? dailyData[6].time : '--',
+//         high: dailyData ? Math.round(dailyData[6].high) : '--',
+//         low: dailyData ? Math.round(dailyData[6].low) : '--'
+//     }
+// ]
 
 export const hourlyForecast = [
     {
         id: 1,
-        time: '1 PM',
         icon: Sunny,   
+        time: '1 PM',
         temp: 18
     },
     {   
         id: 2,
-        time: '2 PM',
         icon: PartlyCloudy,
+        time: '2 PM',
         temp: 19
     },
     {  
         id: 3,
-        time: '3 PM',
         icon: Cloud,
+        time: '3 PM',
         temp: 17
     },
     {
         id: 4,
-        time: '4 PM',
         icon: Rain,
+        time: '4 PM',
         temp: 16
     },
     {
         id: 5,
-        time: '5 PM',
         icon: Thunderstorms,
+        time: '5 PM',
         temp: 15
     },
     {
         id: 6,
-        time: '6 PM',
         icon: Cloud,
+        time: '6 PM',
         temp: 14
     },
     {
         id: 7,
-        time: '7 PM',
         icon: PartlyCloudy,
+        time: '7 PM',
         temp: 13
     },
     {
         id: 8,
-        time: '8 PM',
         icon: Sunny,
+        time: '8 PM',
         temp: 12
     }
 ]

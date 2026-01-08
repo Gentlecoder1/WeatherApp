@@ -91,7 +91,7 @@ export const useWeatherLogic = () => {
                     latitude: city.latitude,
                     longitude: city.longitude,
                     hourly: 'temperature_2m,relative_humidity_2m,precipitation',
-                    daily: 'temperature_2m_max,temperature_2m_min',
+                    daily: 'temperature_2m_max,temperature_2m_min,time',
                     current_weather: true,
                     timezone: 'auto'
                 }
@@ -230,6 +230,21 @@ export const useWeatherLogic = () => {
         { id: 4, value: precip }
     ];
 
+    // daily forecast data
+    const dailyData = weatherData?.daily ? weatherData.daily.time.map((date, index) => {
+        const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
+        return {
+            id: index + 1,
+            time: dayName,
+            high: Math.round(weatherData.daily.temperature_2m_max[index]),
+            low: Math.round(weatherData.daily.temperature_2m_min[index])
+        };
+    }) : [];
+
+    const daysOfWeek = dailyData
+    ? dailyData.map((day, idx) => ({ id: idx + 1, name: day.time }))
+    : Array(7).fill({ name: '--' }).map((_, idx) => ({ id: idx + 1, name: '--' }));
+
     return {
         location, setLocation,
         weatherData,
@@ -244,6 +259,8 @@ export const useWeatherLogic = () => {
         displayName,
         currentDate,
         currentWeather,
-        conditions
+        conditions,
+        dailyData,
+        daysOfWeek
     }
 }

@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import { daysOfWeek } from './index'
+import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
 
 interface Day {
     id: number
@@ -12,6 +12,12 @@ interface DaysProps {
 }
 
 const Days = ({ selectedDay, onSelect }: DaysProps) => {
+
+    const { daysOfWeek } = useWeatherLogic();
+    
+    
+
+
   return (
     <div className='w-[214px] text-white bg-[#262540] border border-[#3C3B5E] py-[10px] px-[8px] rounded-[12px] absolute'>
         <ul>
