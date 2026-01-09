@@ -19,27 +19,40 @@ import {
 const Hourly = () => {
   // Weather hook
 
-  const { dailyData = [], hourlyData = [] } = useWeatherLogic();
+  const { dailyData = [], hourlyData = [], loading } = useWeatherLogic();
 
   // Dropdown days ordered starting from today
   const weekDays: WeekDay[] = getOrderedWeekDays();
 
   // Selected day state (default today)
-  const [selectedDay, setSelectedDay] = useState<WeekDay>(weekDays[0] || { id: 0, name: '--' });
+  const initialDay = weekDays && weekDays.length > 0 ? weekDays[0] : { id: 0, name: 'Today' };
+  const [selectedDay, setSelectedDay] = useState<WeekDay>(initialDay);
   const [openDay, setOpenDay] = useState(false);
 
   // Hourly data filtered for selected day
   const [filteredHourly, setFilteredHourly] = useState<typeof hourlyData>([]);
 
   useEffect(() => {
-    if (!dailyData.length || !hourlyData.length) return;
+    if (!dailyData.length || !hourlyData.length) {
+      console.log('No data yet:', { dailyDataLength: dailyData.length, hourlyDataLength: hourlyData.length });
+      return;
+    }
+
+    console.log('Filtering hourly data:', { selectedDay, dailyData, hourlyData });
 
     // Find the date corresponding to selectedDay
     const dayObj = dailyData.find(d => d.time === selectedDay?.name);
-    if (!dayObj) return;
+    console.log('Found day object:', dayObj);
+    
+    if (!dayObj) {
+      console.log('Day not found, trying to match:', selectedDay?.name);
+      setFilteredHourly([]);
+      return;
+    }
 
     // Filter hourly data for that date
     const dayHours = hourlyData.filter(h => h.date === dayObj.date);
+    console.log('Filtered hourly data:', dayHours);
     setFilteredHourly(dayHours);
   }, [selectedDay, dailyData, hourlyData]);
 
@@ -86,30 +99,38 @@ const Hourly = () => {
       </AnimatePresence>
 
       {/* Hourly forecast */}
-      <StaggerContainer
-        staggerDelay={0.12}
-        childrenDelay={0.5}
-        className="flex flex-col gap-[16px]"
-      >
-        {filteredHourly?.map((item, idx) => (
-          <StaggerItemX key={idx}>
-            <HoverCard
-              scale={1.05}
-              lift={0}
-              className="flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
-            >
-              <div className="flex items-center gap-[8px]">
-                {/* Placeholder for icon if you want later */}
-                {/* <img src={item.icon} className="w-[40px] h-[40px]" alt="" /> */}
-                <p className="text-[20px] font-medium">
-                  {new Date(item.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                </p>
-              </div>
-              <p className="text-[16px] font-medium">{item.temperature}°</p>
-            </HoverCard>
-          </StaggerItemX>
-        ))}
-      </StaggerContainer>
+      {loading ? (
+        <div className="flex flex-col gap-[16px]">
+          {Array(5).fill(null).map((_, idx) => (
+            <div key={idx} className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E] animate-pulse' />
+          ))}
+        </div>
+      ) : (
+        <StaggerContainer
+          staggerDelay={0.12}
+          childrenDelay={0.5}
+          className="flex flex-col gap-[16px]"
+        >
+          {filteredHourly?.map((item, idx) => (
+            <StaggerItemX key={idx}>
+              <HoverCard
+                scale={1.05}
+                lift={0}
+                className="flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
+              >
+                <div className="flex items-center gap-[8px]">
+                  {/* Placeholder for icon if you want later */}
+                  {/* <img src={item.icon} className="w-[40px] h-[40px]" alt="" /> */}
+                  <p className="text-[20px] font-medium">
+                    {new Date(item.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </p>
+                </div>
+                <p className="text-[16px] font-medium">{item.temperature}°</p>
+              </HoverCard>
+            </StaggerItemX>
+          ))}
+        </StaggerContainer>
+      )}
     </FadeInRight>
   );
 };

@@ -9,7 +9,7 @@ import Thunderstorms from '../assets/Thunderstorms.svg'
 import PartlyCloudy from '../assets/PartlyCloudy.svg'
 
 const Daily = () => {
-  const { dailyData = [] } = useWeatherLogic();
+  const { dailyData = [], loading } = useWeatherLogic();
 
   const icons = [Sunny, Cloud, Rain, Thunderstorms, Sunny, PartlyCloudy, Rain];
   const dailyForecast = dailyData && dailyData.length > 0
@@ -27,6 +27,22 @@ const Daily = () => {
         high: '--',
         low: '--',
       }));
+
+  if (loading) {
+    return (
+      <FadeInUp 
+        delay={0.7}
+        className='w-full flex flex-col gap-[20px]'
+      >
+        <h1 className='text-[20px] font-semibold'>Daily forecast</h1>
+        <div className='w-full grid grid-cols-3 sm:grid-cols-7 gap-[16px]'>
+          {Array(7).fill(null).map((_, idx) => (
+            <div key={idx} className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] animate-pulse' />
+          ))}
+        </div>
+      </FadeInUp>
+    );
+  }
 
   return (
     <FadeInUp 

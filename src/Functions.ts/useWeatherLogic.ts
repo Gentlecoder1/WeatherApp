@@ -249,25 +249,28 @@ export const useWeatherLogic = () => {
 
 
     // daily forecast data with date for filtering
-    const dailyData = weatherData?.daily ? weatherData.daily.time.map((date, index) => {
+    const dailyData = weatherData?.daily?.time ? weatherData.daily.time.map((date, index) => {
         const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
         return {
             id: index + 1,
             time: dayName,
             date,
-            high: Math.round(weatherData.daily.temperature_2m_max[index]),
-            low: Math.round(weatherData.daily.temperature_2m_min[index])
+            high: weatherData.daily.temperature_2m_max[index] ? Math.round(weatherData.daily.temperature_2m_max[index]) : 0,
+            low: weatherData.daily.temperature_2m_min[index] ? Math.round(weatherData.daily.temperature_2m_min[index]) : 0
         };
     }) : [];
 
     // hourly data with date for filtering
-    const hourlyData = weatherData?.hourly ? weatherData.hourly.time.map((time, index) => ({
+    const hourlyData = weatherData?.hourly?.time ? weatherData.hourly.time.map((time, index) => ({
         time,
         date: new Date(time).toISOString().split('T')[0],
-        temperature: Math.round(weatherData.hourly.temperature_2m[index]),
-        humidity: Math.round(weatherData.hourly.relative_humidity_2m[index]),
-        precipitation: Math.round(weatherData.hourly.precipitation[index] * 100) / 100 // round to 2 decimals
+        temperature: weatherData.hourly.temperature_2m[index] ? Math.round(weatherData.hourly.temperature_2m[index]) : 0,
+        humidity: weatherData.hourly.relative_humidity_2m[index] ? Math.round(weatherData.hourly.relative_humidity_2m[index]) : 0,
+        precipitation: weatherData.hourly.precipitation[index] ? Math.round(weatherData.hourly.precipitation[index] * 100) / 100 : 0
     })) : [];
+
+    console.log('dailyData:', dailyData);
+    console.log('hourlyData:', hourlyData);
 
     return {
         location, setLocation,
