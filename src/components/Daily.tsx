@@ -32,12 +32,12 @@ const Daily = () => {
     return (
       <FadeInUp 
         delay={0.7}
-        className='w-full flex flex-col gap-[20px]'
+        className='w-full flex flex-col gap-5'
       >
         <h1 className='text-[20px] font-semibold'>Daily forecast</h1>
-        <div className='w-full grid grid-cols-3 sm:grid-cols-7 gap-[16px]'>
+        <div className='w-full grid grid-cols-3 sm:grid-cols-7 gap-4'>
           {Array(7).fill(null).map((_, idx) => (
-            <div key={idx} className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] animate-pulse' />
+            <div key={idx} className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] animate-pulse' />
           ))}
         </div>
       </FadeInUp>
@@ -47,24 +47,24 @@ const Daily = () => {
   return (
     <FadeInUp 
       delay={0.7}
-      className='w-full flex flex-col gap-[20px]'
+      className='w-full flex flex-col gap-5'
     >
         <h1 className='text-[20px] font-semibold'>Daily forecast</h1>
 
         <StaggerContainer 
           staggerDelay={0.15}
           childrenDelay={0.8}
-          className='w-full grid grid-cols-3 sm:grid-cols-7 gap-[16px]'
+          className='w-full grid grid-cols-3 sm:grid-cols-7 gap-4'
         >
             {dailyForecast.map(({ id, day, icon, high, low })=> (
                 <StaggerItemScale key={id}>
                     <HoverCard 
                         scale={1.05}
                         lift={-5}
-                        className='px-[12px] py-[16px] rounded-[12px] bg-[#262540] border border-[#3C3B5E] space-y-[16px] flex flex-col items-center cursor-pointer'
+                        className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] space-y-4 flex flex-col items-center cursor-pointer'
                     >
                         <p className='text-[18px] font-medium'>{day}</p>
-                        <div className='w-[60px] h-[60px]'><img src={icon} alt="weatherIcon" /></div>
+                        <div className='w-15 h-15'><img src={icon} alt="weatherIcon" /></div>
                         <div className='w-full flex justify-between'>
                             <p>{low}°</p>
                             <p>{high}°</p>

@@ -19,14 +19,14 @@ const Days = ({ days = [], selectedDay, onSelect }: DaysProps) => {
     }
     
     return (
-        <div className='w-[214px] text-white bg-[#262540] border border-[#3C3B5E] py-[10px] px-[8px] rounded-[12px] absolute'>
+        <div className='w-53.5 text-white bg-[#262540] border border-[#3C3B5E] py-2.5 px-2 rounded-xl absolute'>
             <ul>
                 {days.map((day: Day) => (
                     <li
                         key={day.id}
                         onClick={() => onSelect(day)}
                         className={clsx(
-                            "cursor-pointer py-[6px] px-[8px] text-[16px] font-500 rounded-[8px] text-white",
+                            "cursor-pointer py-1.5 px-2 text-[16px] font-500 rounded-lg text-white",
                             selectedDay && selectedDay.id === day.id ? "bg-[#3C3B5E]" : ""
                         )}
                     >

@@ -59,7 +59,7 @@ const Hourly = () => {
   return (
     <FadeInRight
       delay={0.6}
-      className="w-full lg:max-w-[30%] bg-[#262540] rounded-[20px] flex flex-col p-[24px] gap-[16px]"
+      className="w-full lg:max-w-[30%] bg-[#262540] rounded-[20px] flex flex-col p-6 gap-4"
     >
       {/* Header with dropdown */}
       <div className="w-full flex justify-between items-center">
@@ -67,12 +67,12 @@ const Hourly = () => {
 
         <TapButton
           onClick={() => setOpenDay(!openDay)}
-          className="bg-[#3C3B5E] rounded-[8px] flex items-center gap-[12px] px-[16px] py-[8px] sm:px-[16px] sm:py-[12px] cursor-pointer"
+          className="bg-[#3C3B5E] rounded-lg flex items-center gap-3 px-4 py-2 sm:px-4 sm:py-3 cursor-pointer"
         >
           <p className="text-[14px] sm:text-[16px] font-medium">
             {selectedDay?.name ?? "--"}
           </p>
-          <ChevronDown className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px]" />
+          <ChevronDown className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
         </TapButton>
       </div>
 
@@ -100,25 +100,25 @@ const Hourly = () => {
 
       {/* Hourly forecast */}
       {loading ? (
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-4">
           {Array(5).fill(null).map((_, idx) => (
-            <div key={idx} className='flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E] animate-pulse' />
+            <div key={idx} className='flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] animate-pulse' />
           ))}
         </div>
       ) : (
         <StaggerContainer
           staggerDelay={0.12}
           childrenDelay={0.5}
-          className="flex flex-col gap-[16px]"
+          className="flex flex-col gap-4"
         >
           {filteredHourly?.map((item, idx) => (
             <StaggerItemX key={idx}>
               <HoverCard
                 scale={1.05}
                 lift={0}
-                className="flex justify-between items-center px-[16px] py-[10px] rounded-[8px] bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
+                className="flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
               >
-                <div className="flex items-center gap-[8px]">
+                <div className="flex items-center gap-2">
                   {/* Placeholder for icon if you want later */}
                   {/* <img src={item.icon} className="w-[40px] h-[40px]" alt="" /> */}
                   <p className="text-[20px] font-medium">

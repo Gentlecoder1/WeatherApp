@@ -14,13 +14,13 @@ const Unit = ({ selectedUnits, setSelectedUnits }: UnitProps) => {
     }
 
   return (
-    <div className='w-[214px] text-white bg-[#262540] border border-[#3C3B5E] py-[10px] px-[8px] rounded-[12px] absolute z-50'>
-        <div className='text-[18px] font-500 py-[10px] px-[8px]'>Switch to Imperial</div>
+    <div className='w-53.5 text-white bg-[#262540] border border-[#3C3B5E] py-2.5 px-2 rounded-xl absolute z-50'>
+        <div className='text-[18px] font-500 py-2.5 px-2'>Switch to Imperial</div>
 
-        <div className='flex flex-col gap-[10px]'>
+        <div className='flex flex-col gap-2.5'>
             {unitTemp.map(({ title, units }, index) => (
                 <React.Fragment key={index}>
-                    <div className='flex flex-col gap-[8px] cursor-pointer'>
+                    <div className='flex flex-col gap-2 cursor-pointer'>
                         <h1 className='text-[#ACACB7] text-[14px] font-500'>{title}</h1>
                         <ul>
                             {units.map((unit) => (
@@ -28,7 +28,7 @@ const Unit = ({ selectedUnits, setSelectedUnits }: UnitProps) => {
                                     key={unit.id}
                                     onClick={() => handleSelect(index, unit.id)}
                                     className={clsx(
-                                        "py-[6px] px-[8px] text-[16px] font-500 rounded-[8px] text-white",
+                                        "py-1.5 px-2 text-[16px] font-500 rounded-lg text-white",
                                         selectedUnits[index] === unit.id 
                                             ? "bg-[#3C3B5E] " 
                                             : ""

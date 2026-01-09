@@ -58,10 +58,10 @@ const Body = ({ selectedUnits }: BodyProps) => {
     }));
   
   return (
-    <div className="w-full mx-auto my-10 flex flex-col items-center space-y-[64px]">
+    <div className="w-full mx-auto my-10 flex flex-col items-center space-y-16">
         <FadeInUp 
             delay={0.1}
-            className="max-w-[330px] sm:max-w-[482px] md:max-w-[731px] text-center"
+            className="max-w-82.5 sm:max-w-120.5 md:max-w-182.75 text-center"
         >
             <h1 className="text-[45px] sm:text-[52px] font-bold text-white">How's the sky looking today?</h1>
         </FadeInUp>
@@ -70,10 +70,10 @@ const Body = ({ selectedUnits }: BodyProps) => {
             delay={0.2}
             className="w-full mx-auto"
         >
-            <div className="flex flex-col sm:flex-row  gap-[16px] max-w-[656px] text-white mx-auto relative">
+            <div className="flex flex-col sm:flex-row  gap-4 max-w-164 text-white mx-auto relative">
                 
                 {/* location input */}
-                <div className="bg-[#262540] w-full sm:max-w-[526px] rounded-[12px] flex items-center py-[16px] px-[24px] mx-auto gap-[16px]">
+                <div className="bg-[#262540] w-full sm:max-w-131.5 rounded-xl flex items-center py-4 px-6 mx-auto gap-4">
                     <Search size={20} className="text-white" />
 
                     <input 
@@ -89,14 +89,14 @@ const Body = ({ selectedUnits }: BodyProps) => {
                 <TapButton
                     onClick={handleSearch} 
                     // disabled={loading}
-                    className="bg-[#4658D9] hover:bg-[#2B1B9C] cursor-pointer py-[16px] px-[24px] rounded-[12px] flex"
+                    className="bg-[#4658D9] hover:bg-[#2B1B9C] cursor-pointer py-4 px-6 rounded-xl flex"
                 >
                     <p className="text-[20px] mx-auto">{loading ? 'Searching...' : 'Search'}</p>
                 </TapButton>
 
                 {/* Suggestions dropdown */}
                 {suggestions.length > 0 && (
-                    <ul className="absolute top-full left-0 right-0 mt-2 bg-[#262540] rounded-[12px] z-20 max-w-[526px] max-h-[200px] overflow-y-auto custom-scrollbar">
+                    <ul className="absolute top-full left-0 right-0 mt-2 bg-[#262540] rounded-xl z-20 max-w-131.5 max-h-50 overflow-y-auto custom-scrollbar">
                         {suggestions.map((city) => (
                             <li
                                 key={city.id}
@@ -114,20 +114,20 @@ const Body = ({ selectedUnits }: BodyProps) => {
         {error ? (
             <NoResult/>
         ) : (
-            <div className="w-full mx-auto lg:flex space-y-[32px] lg:space-y-0 text-white gap-[32px]">
-                <div className="w-full lg:max-w-[70%] space-y-[32px]">
+            <div className="w-full mx-auto lg:flex space-y-8 lg:space-y-0 text-white gap-8">
+                <div className="w-full lg:max-w-[70%] space-y-8">
 
                     {/* weather info card */}
                     <ScaleFade 
                         delay={0.3}
-                        className="relative w-full rounded-[20px] flex flex-col sm:flex-row items-center justify-between py-[80px] px-[24px] overflow-hidden"
+                        className="relative w-full rounded-[20px] flex flex-col sm:flex-row items-center justify-between py-20 px-6 overflow-hidden"
                     >
                         {/* Animated Weather Background */}
                         <WeatherBackground weatherType={currentWeather} />
                         
                         {/* Content overlay */}
 
-                        <div className="relative z-10 space-y-[12px]">
+                        <div className="relative z-10 space-y-3">
                             <h1 className="text-[28px] font-bold">{displayName}</h1>
                             <p className="text-[18px] font-500">{currentDate}</p>
                         </div>
