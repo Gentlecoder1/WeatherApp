@@ -3,9 +3,9 @@ import { StaggerContainer, StaggerItem, HoverCard } from '../Animations/motion'
 import { convertTemp, convertWind, convertPrecip } from '../utils/unitConversion';
 
 interface ConditionProps {
-  conditions: { id: number; value: number | string; unit: string }[];
+  conditions: Array<{ id: number; value: number | string | undefined; unit: string }>;
 }
-const Condition = ({ conditions }: ConditionProps) => {
+const Condition = ({ conditions = [] }: ConditionProps) => {
   return (
     <StaggerContainer 
       staggerDelay={0.15}

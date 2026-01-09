@@ -9,20 +9,20 @@ import Thunderstorms from '../assets/Thunderstorms.svg'
 import PartlyCloudy from '../assets/PartlyCloudy.svg'
 
 const Daily = () => {
-  const { dailyData } = useWeatherLogic();
+  const { dailyData = [] } = useWeatherLogic();
 
   const icons = [Sunny, Cloud, Rain, Thunderstorms, Sunny, PartlyCloudy, Rain];
-  const dailyForecast = dailyData
+  const dailyForecast = dailyData && dailyData.length > 0
     ? dailyData.map((day, idx) => ({
         id: idx + 1,
-        icon: icons[idx],
-        day: day.time,
-        high: Math.round(day.high),
-        low: Math.round(day.low),
+        icon: icons[idx % icons.length],
+        day: day.time || '--',
+        high: typeof day.high === 'number' ? Math.round(day.high) : '--',
+        low: typeof day.low === 'number' ? Math.round(day.low) : '--',
       }))
-    : Array(7).fill({}).map((_, idx) => ({
+    : Array(7).fill(null).map((_, idx) => ({
         id: idx + 1,
-        icon: icons[idx],
+        icon: icons[idx % icons.length],
         day: '--',
         high: '--',
         low: '--',

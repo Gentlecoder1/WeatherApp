@@ -10,3 +10,9 @@ export const getOrderedWeekDays = (): WeekDay[] => {
   return [...days.slice(todayIndex), ...days.slice(0, todayIndex)]
     .map((name, idx) => ({ id: idx, name }));
 };
+
+export interface Day {
+  id: number;
+  label: string; // "Monday"
+  date?: string; // "2025-01-08" (optional)
+}

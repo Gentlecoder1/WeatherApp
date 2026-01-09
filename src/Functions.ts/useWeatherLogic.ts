@@ -82,6 +82,12 @@ export const useWeatherLogic = () => {
     const mainUrl = `https://api.open-meteo.com/v1/forecast`    
     
     const fetchWeatherData = async (city: City) => {
+        if (!city || typeof city.latitude !== 'number' || typeof city.longitude !== 'number') {
+            setError('Invalid city data');
+            setLoading(false);
+            return;
+        }
+
         setSuggestions([]);
         setLoading(true);
 
@@ -99,6 +105,13 @@ export const useWeatherLogic = () => {
                 }
             });
             console.log('API Response:', weatherRes.data);
+            
+            // Validate API response structure
+            if (!weatherRes.data.hourly || !weatherRes.data.daily) {
+                setError('Invalid API response structure');
+                return;
+            }
+
             setWeatherData({
                 ...weatherRes.data,
                 displayName: fullName
@@ -234,21 +247,23 @@ export const useWeatherLogic = () => {
         { id: 4, value: precip }
     ];
 
-    // daily forecast data
+
+    // daily forecast data with date for filtering
     const dailyData = weatherData?.daily ? weatherData.daily.time.map((date, index) => {
-        const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
+        const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
         return {
             id: index + 1,
             time: dayName,
+            date,
             high: Math.round(weatherData.daily.temperature_2m_max[index]),
             low: Math.round(weatherData.daily.temperature_2m_min[index])
         };
     }) : [];
 
-    const daysOfWeek = getOrderedWeekDays;
-
+    // hourly data with date for filtering
     const hourlyData = weatherData?.hourly ? weatherData.hourly.time.map((time, index) => ({
         time,
+        date: new Date(time).toISOString().split('T')[0],
         temperature: Math.round(weatherData.hourly.temperature_2m[index]),
         humidity: Math.round(weatherData.hourly.relative_humidity_2m[index]),
         precipitation: Math.round(weatherData.hourly.precipitation[index] * 100) / 100 // round to 2 decimals
@@ -269,8 +284,7 @@ export const useWeatherLogic = () => {
         currentDate,
         currentWeather,
         conditions,
-        dailyData,
-        daysOfWeek,
-        hourlyData
+        dailyData: dailyData || [],
+        hourlyData: hourlyData || []
     }
 }
