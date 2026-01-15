@@ -48,9 +48,9 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
         className='w-full flex flex-col gap-5'
       >
         <h1 className='text-[20px] font-semibold'>Daily forecast</h1>
-        <div className='w-full grid grid-cols-3 sm:grid-cols-7 gap-4'>
+        <div className='w-full grid grid-cols-3 md:grid-cols-7 gap-4'>
           {Array(7).fill(null).map((_, idx) => (
-            <div key={idx} className='px-3 py-4 h-[150px] rounded-xl bg-[#262540] border border-[#3C3B5E] animate-pulse' />
+            <div key={idx} className='px-3 py-4 h-37.5 rounded-xl bg-[#262540] border border-[#3C3B5E] animate-pulse' />
           ))}
         </div>
       </FadeInUp>
@@ -68,36 +68,36 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
           <StaggerContainer 
             staggerDelay={0.15}
             childrenDelay={0.8}
-            className='w-full grid grid-cols-3 sm:grid-cols-7 gap-4'
+            className='w-full grid grid-cols-3 md:grid-cols-7 gap-4'
           >
-              {dailyForecast.map(({ id, day, icon, high, low })=> (
-                  <StaggerItemScale key={id}>
-                      <HoverCard 
-                          scale={1.05}
-                          lift={-5}
-                          className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] space-y-4 flex flex-col items-center cursor-pointer'
-                      >
-                          <p className='text-[18px] font-medium'>{day}</p>
-                          <div className='w-15 h-15'><img src={icon} alt="weatherIcon" /></div>
-                          <div className='w-full flex justify-between'>
-                              <p>{low}°</p>
-                              <p>{high}°</p>
-                          </div>
-                      </HoverCard>
-                  </StaggerItemScale>
-              ))}
+            {dailyForecast.map(({ id, day, icon, high, low })=> (
+                <StaggerItemScale key={id}>
+                    <HoverCard 
+                        scale={1.05}
+                        lift={-5}
+                        className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] flex flex-col justify-center gap-4 cursor-pointer'
+                    >
+                        <p className='text-[18px] text-center font-medium'>{day}</p>
+                        <div className='mx-auto w-12 h-12'><img src={icon} alt="weatherIcon" className='w-full h-full' /></div>
+                        <div className='w-full flex justify-between'>
+                            <p>{low}°</p>
+                            <p>{high}°</p>
+                        </div>
+                    </HoverCard>
+                </StaggerItemScale>
+            ))}
           </StaggerContainer>
         ) : (
-          <div className='w-full grid grid-cols-3 sm:grid-cols-7 gap-4'>
+          <div className='w-full grid grid-cols-3 md:grid-cols-7 gap-4'>
             {placeholderData.map(({ id, icon, day, high, low }) => (
               <HoverCard 
                 key={id}
                 scale={1.05}
                 lift={-5}
-                className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] space-y-4 flex flex-col items-center cursor-pointer'
+                className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] flex flex-col justify-center gap-4 cursor-pointer'
               >
-                <p className='text-[18px] font-medium'>{day}</p>
-                <div className='w-15 h-15'><img src={icon} alt="weatherIcon" /></div>
+                <p className='text-[18px] text-center font-medium'>{day}</p>
+                <div className='mx-auto w-12 h-12'><img src={icon} alt="weatherIcon" /></div>
                 <div className='w-full flex justify-between'>
                   <p>{low}°</p>
                   <p>{high}°</p>

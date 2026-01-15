@@ -251,7 +251,7 @@ export const useWeatherLogic = () => {
 
     // daily forecast data with date for filtering
     const dailyData = weatherData?.daily?.time ? weatherData.daily.time.map((date, index) => {
-        const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
+        const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
         const weatherCode = weatherData.daily.weathercode?.[index];
         return {
             id: index + 1,
