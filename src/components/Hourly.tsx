@@ -86,17 +86,17 @@ const Hourly = () => {
       {/* Hourly forecast */}
       {loading ? (
         <div className="flex flex-col gap-4">
-          {Array(5).fill(null).map((_, idx) => (
-            <div key={idx} className='flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] animate-pulse' />
+          {Array(8).fill(null).map((_, idx) => (
+            <div key={idx} className='flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] h-[60px] animate-pulse' />
           ))}
         </div>
-      ) : (
+      ) : filteredHourly.length > 0 ? (
         <StaggerContainer
           staggerDelay={0.12}
           childrenDelay={0.5}
           className="flex flex-col gap-4"
         >
-          {filteredHourly?.map((item, idx) => (
+          {filteredHourly.map((item, idx) => (
             <StaggerItemX key={idx}>
               <HoverCard
                 scale={1.05}
@@ -104,8 +104,13 @@ const Hourly = () => {
                 className="flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
               >
                 <div className="flex items-center gap-2">
-                  {/* Placeholder for icon if you want later */}
-                  {/* <img src={item.icon} className="w-[40px] h-[40px]" alt="" /> */}
+                  <div className="w-10 h-10 flex items-center justify-center text-gray-400">
+                    {item?.icon ? (
+                      <img src={item.icon} className="w-10 h-10" alt="weather" />
+                    ) : (
+                      <span className="text-[20px]">--</span>
+                    )}
+                  </div>
                   <p className="text-[20px] font-medium">
                     {new Date(item.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </p>
@@ -115,6 +120,25 @@ const Hourly = () => {
             </StaggerItemX>
           ))}
         </StaggerContainer>
+      ) : (
+        <div className="flex flex-col gap-4">
+          {Array(8).fill(null).map((_, idx) => (
+            <HoverCard
+              key={idx}
+              scale={1.05}
+              lift={0}
+              className="flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 flex items-center justify-center text-gray-400">
+                  <span className="text-[20px]">--</span>
+                </div>
+                <p className="text-[20px] font-medium">--:--</p>
+              </div>
+              <p className="text-[16px] font-medium">--°</p>
+            </HoverCard>
+          ))}
+        </div>
       )}
     </FadeInRight>
   );
