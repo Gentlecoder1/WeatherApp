@@ -1,18 +1,30 @@
-export interface WeekDay {
-  id: number;
-  name: string;
-}
-
-export const getOrderedWeekDays = (): WeekDay[] => {
-  const todayIndex = new Date().getDay();
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-  return [...days.slice(todayIndex), ...days.slice(0, todayIndex)]
-    .map((name, idx) => ({ id: idx, name }));
-};
-
 export interface Day {
   id: number;
-  label: string; // "Monday"
-  date?: string; // "2025-01-08" (optional)
+  name: string;
+  date: string;
 }
+
+/**
+ * Get ordered week days starting from today (local function, not dependent on API)
+ * Returns 7 days with current day at the top
+ */
+export const getOrderedWeekDays = (): Day[] => {
+  const today = new Date();
+  const days: Day[] = [];
+
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+    const dateStr = date.toISOString().split('T')[0]; // "2026-01-15" format
+
+    days.push({
+      id: i + 1,
+      name: dayName,
+      date: dateStr
+    });
+  }
+
+  return days;
+};

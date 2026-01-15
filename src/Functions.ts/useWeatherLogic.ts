@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios'
-import { getOrderedWeekDays } from '../utils/data';
 
 
 // Type for city from geocoding API

@@ -10,7 +10,7 @@ import { MotionHeader, FadeInLeft, dropIn } from "../Animations/motion";
 interface HeaderProps {
   selectedUnits: Record<number, number>;
   setSelectedUnits: React.Dispatch<React.SetStateAction<Record<number, number>>>;
-}
+}    
 
 const Header = ({ selectedUnits, setSelectedUnits }: HeaderProps) => {
 
