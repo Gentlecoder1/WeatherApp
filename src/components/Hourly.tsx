@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 import Days from "./Days";
-import { useWeatherLogic } from "../Functions.ts/useWeatherLogic";
 import { getOrderedWeekDays, type Day } from "../utils/data";
 import {
   FadeInRight,
@@ -15,10 +14,21 @@ import {
   TapButton
 } from "../Animations/motion";
 
-const Hourly = () => {
-  // Weather hook
-  const { hourlyData = [], loading } = useWeatherLogic();
+interface HourlyDataItem {
+  time: string;
+  date: string;
+  temperature: number;
+  humidity: number;
+  precipitation: number;
+  icon?: string;
+}
 
+interface HourlyProps {
+  hourlyData: HourlyDataItem[];
+  loading: boolean;
+}
+
+const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
   // Get ordered week days locally (current day first) - always available
   const days: Day[] = getOrderedWeekDays();
 

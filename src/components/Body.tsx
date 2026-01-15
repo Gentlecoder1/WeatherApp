@@ -34,7 +34,9 @@ const Body = ({ selectedUnits }: BodyProps) => {
         displayName,
         currentDate,
         currentWeather,
-        conditions
+        conditions,
+        dailyData,
+        hourlyData
     } = useWeatherLogic();
 
     // Helper to get unit string from selectedUnits
@@ -148,10 +150,10 @@ const Body = ({ selectedUnits }: BodyProps) => {
                     <Condition 
                         conditions={safeConditions}
                     />
-                    <Daily />
+                    <Daily dailyData={dailyData} loading={loading} />
                 </div>
 
-                <Hourly />
+                <Hourly hourlyData={hourlyData} loading={loading} />
             </div>
         )}
     </div>
