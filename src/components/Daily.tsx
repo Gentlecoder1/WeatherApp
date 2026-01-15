@@ -1,11 +1,8 @@
 import { FadeInUp, StaggerContainer, StaggerItemScale, HoverCard } from '../Animations/motion'
+import { weatherIcons } from '.'
+import type { WeatherType } from '../Functions.ts/useWeatherLogic'
 
 import Sunny from '../assets/Sunny.png'
-import Cloud from '../assets/cloud.png'
-import Rain from '../assets/Rain.svg'
-import Snowy from '../assets/Snow.svg'
-import Thunderstorms from '../assets/Thunderstorms.svg'
-import PartlyCloudy from '../assets/PartlyCloudy.svg'
 
 interface DailyDataItem {
   id: number;
@@ -13,6 +10,8 @@ interface DailyDataItem {
   date: string;
   high: number;
   low: number;
+  weatherCode?: number;
+  weatherType?: WeatherType;
 }
 
 interface DailyProps {
@@ -21,23 +20,21 @@ interface DailyProps {
 }
 
 const Daily = ({ dailyData = [], loading }: DailyProps) => {
-
-  const icons = [Sunny, Cloud, Rain, Thunderstorms, Sunny, PartlyCloudy, Rain];
   
   // Placeholder data when no API data
   const placeholderData = Array(7).fill(null).map((_, idx) => ({
     id: idx + 1,
-    icon: icons[idx % icons.length],
+    icon: Sunny,
     day: '--',
     high: '--' as string | number,
     low: '--' as string | number,
   }));
 
-  // Map daily data from API
+  // Map daily data from API - use weatherType to get correct icon
   const dailyForecast = dailyData.length > 0
     ? dailyData.map((day, idx) => ({
         id: idx + 1,
-        icon: icons[idx % icons.length],
+        icon: day.weatherType ? weatherIcons[day.weatherType] : '--',
         day: day.time || '--',
         high: typeof day.high === 'number' ? day.high : '--',
         low: typeof day.low === 'number' ? day.low : '--',

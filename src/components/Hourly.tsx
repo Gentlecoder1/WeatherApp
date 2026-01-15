@@ -5,6 +5,8 @@ import { ChevronDown } from "lucide-react";
 
 import Days from "./Days";
 import { getOrderedWeekDays, type Day } from "../utils/data";
+import { weatherIcons } from ".";
+import type { WeatherType } from "../Functions.ts/useWeatherLogic";
 import {
   FadeInRight,
   StaggerContainer,
@@ -20,7 +22,8 @@ interface HourlyDataItem {
   temperature: number;
   humidity: number;
   precipitation: number;
-  icon?: string;
+  weatherCode?: number;
+  weatherType?: WeatherType;
 }
 
 interface HourlyProps {
@@ -56,7 +59,6 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
       delay={0.6}
       className="w-full lg:max-w-[30%] bg-[#262540] rounded-[20px] flex flex-col p-6 gap-4"
     >
-      {/* Header with dropdown */}
       <div className="w-full flex justify-between items-center relative">
         <h1 className="text-[20px] font-semibold">Hourly forecast</h1>
 
@@ -97,7 +99,7 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
       {loading ? (
         <div className="flex flex-col gap-4">
           {Array(8).fill(null).map((_, idx) => (
-            <div key={idx} className='flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] h-[60px] animate-pulse' />
+            <div key={idx} className='flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] h-15 animate-pulse' />
           ))}
         </div>
       ) : filteredHourly.length > 0 ? (
@@ -114,11 +116,11 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
                 className="flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
               >
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 flex items-center justify-center text-gray-400">
-                    {item?.icon ? (
-                      <img src={item.icon} className="w-10 h-10" alt="weather" />
+                  <div className="w-10 h-10 flex items-center justify-center">
+                    {item.weatherType ? (
+                      <img src={weatherIcons[item.weatherType]} className="w-10 h-10" alt="weather" />
                     ) : (
-                      <span className="text-[20px]">--</span>
+                      <span className="text-[20px] text-gray-400">--</span>
                     )}
                   </div>
                   <p className="text-[20px] font-medium">

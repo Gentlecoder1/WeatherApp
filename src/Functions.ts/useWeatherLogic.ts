@@ -20,11 +20,13 @@ interface WeatherData {
         temperature_2m: number[];
         relative_humidity_2m: number[];
         precipitation: number[];
+        weathercode: number[];
     };
     daily: {
         time: string[];
         temperature_2m_max: number[];
         temperature_2m_min: number[];
+        weathercode: number[];
     };
     displayName: string;
     current_weather?: {
@@ -38,7 +40,7 @@ interface WeatherData {
 export type WeatherType = 'sunny' | 'cloudy' | 'rainy' | 'thunderstorm' | 'snowy';
 
 // Map Open-Meteo weather codes to our weather types
-const getWeatherType = (code: number | undefined, temp: number | undefined): WeatherType => {
+export const getWeatherType = (code: number | undefined, temp: number | undefined): WeatherType => {
     // Very cold temperatures (freezing or below) with clear/cloudy sky should show snowy
     if (temp !== undefined && temp <= 0) {
         if (code === undefined || code === 0 || [1, 2, 3].includes(code)) {
@@ -97,8 +99,8 @@ export const useWeatherLogic = () => {
                 params: {
                     latitude: city.latitude,
                     longitude: city.longitude,
-                    hourly: 'temperature_2m,relative_humidity_2m,precipitation',
-                    daily: 'temperature_2m_max,temperature_2m_min',
+                    hourly: 'temperature_2m,relative_humidity_2m,precipitation,weathercode',
+                    daily: 'temperature_2m_max,temperature_2m_min,weathercode',
                     current_weather: true,
                     timezone: 'auto'
                 }
@@ -250,23 +252,32 @@ export const useWeatherLogic = () => {
     // daily forecast data with date for filtering
     const dailyData = weatherData?.daily?.time ? weatherData.daily.time.map((date, index) => {
         const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
+        const weatherCode = weatherData.daily.weathercode?.[index];
         return {
             id: index + 1,
             time: dayName,
             date,
             high: weatherData.daily.temperature_2m_max[index] ? Math.round(weatherData.daily.temperature_2m_max[index]) : 0,
-            low: weatherData.daily.temperature_2m_min[index] ? Math.round(weatherData.daily.temperature_2m_min[index]) : 0
+            low: weatherData.daily.temperature_2m_min[index] ? Math.round(weatherData.daily.temperature_2m_min[index]) : 0,
+            weatherCode,
+            weatherType: getWeatherType(weatherCode, weatherData.daily.temperature_2m_max[index])
         };
     }) : [];
 
     // hourly data with date for filtering
-    const hourlyData = weatherData?.hourly?.time ? weatherData.hourly.time.map((time, index) => ({
-        time,
-        date: new Date(time).toISOString().split('T')[0],
-        temperature: weatherData.hourly.temperature_2m[index] ? Math.round(weatherData.hourly.temperature_2m[index]) : 0,
-        humidity: weatherData.hourly.relative_humidity_2m[index] ? Math.round(weatherData.hourly.relative_humidity_2m[index]) : 0,
-        precipitation: weatherData.hourly.precipitation[index] ? Math.round(weatherData.hourly.precipitation[index] * 100) / 100 : 0
-    })) : [];
+    const hourlyData = weatherData?.hourly?.time ? weatherData.hourly.time.map((time, index) => {
+        const weatherCode = weatherData.hourly.weathercode?.[index];
+        const temp = weatherData.hourly.temperature_2m[index];
+        return {
+            time,
+            date: new Date(time).toISOString().split('T')[0],
+            temperature: temp ? Math.round(temp) : 0,
+            humidity: weatherData.hourly.relative_humidity_2m[index] ? Math.round(weatherData.hourly.relative_humidity_2m[index]) : 0,
+            precipitation: weatherData.hourly.precipitation[index] ? Math.round(weatherData.hourly.precipitation[index] * 100) / 100 : 0,
+            weatherCode,
+            weatherType: getWeatherType(weatherCode, temp)
+        };
+    }) : [];
 
     console.log('dailyData:', dailyData);
     console.log('hourlyData:', hourlyData);
