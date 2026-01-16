@@ -10,7 +10,7 @@ import type { Day } from '../utils/data'
 export const unitTemp = [
     {
         id: 1,
-        title: "Temp",
+        title: "Temperature",
         units: [
             { id: 1, name: 'Celsius (°C)' },
             { id: 2, name: 'Fahrenheit (°F)' }
@@ -47,24 +47,24 @@ export const conditionTitles = [
  * Returns 7 days with current day at the top
  */
 export const getOrderedWeekDays = (): Day[] => {
-  const today = new Date();
-  const days: Day[] = [];
+    const today = new Date();
+    const days: Day[] = [];
 
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() + i);
-    
-    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
-    const dateStr = date.toISOString().split('T')[0]; // "2026-01-15" format
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+        // Use local date in YYYY-MM-DD format
+        const dateStr = date.toLocaleDateString('en-CA'); // '2026-01-15' format, local timezone
 
-    days.push({
-      id: i + 1,
-      name: dayName,
-      date: dateStr
-    });
-  }
+        days.push({
+            id: i + 1,
+            name: dayName,
+            date: dateStr
+        });
+    }
 
-  return days;
+    return days;
 };
 
  // Weather icon mapping

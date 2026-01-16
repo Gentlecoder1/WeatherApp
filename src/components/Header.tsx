@@ -32,12 +32,14 @@ const Header = ({ selectedUnits, setSelectedUnits }: HeaderProps) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               onClick={() => setOpenUnit(!openUnit)}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.95 }}
               className="bg-[#262540] rounded-lg flex items-center gap-2.5 px-2.5 py-2 sm:px-4 sm:py-3 cursor-pointer"
             >
                 <IoSettingsOutline className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
                 <p className="text-[14px] sm:text-[16px] font-medium">Units</p>
-                <ChevronDown className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
+                <ChevronDown 
+                  className={`w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 ${!openUnit ? '' : 'rotate-180'}`}
+                />
             </motion.div>
         </div>
 

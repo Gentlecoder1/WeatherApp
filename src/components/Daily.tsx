@@ -22,7 +22,7 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
 
   const dailyApi = dailyData.map((day, idx) => ({
     id: idx + 1,
-    icon: day.weatherType ? weatherIcons[day.weatherType] : '--',
+    icon: day.weatherType ? weatherIcons[day.weatherType] : Sunny,
     day: day.time || '--',
     high: typeof day.high === 'number' ? day.high : '--',
     low: typeof day.low === 'number' ? day.low : '--',
@@ -89,7 +89,7 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
                 className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] flex flex-col justify-center gap-4 cursor-pointer'
               >
                 <p className='text-[18px] text-center font-medium'>{day}</p>
-                <div className='mx-auto w-12 h-12'><img src={icon} alt="weatherIcon" /></div>
+                <div className='mx-auto w-12 h-12'><img src={icon} alt="weatherIcon" className='w-full h-full' /></div>
                 <div className='w-full flex justify-between'>
                   <p>{low}°</p>
                   <p>{high}°</p>

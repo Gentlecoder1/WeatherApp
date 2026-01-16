@@ -60,7 +60,7 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
           <p className="text-[14px] sm:text-[16px] font-medium">
             {selectedDay.name}
           </p>
-          <ChevronDown className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
+          <ChevronDown className={`w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 ${!openDay ? '' : 'rotate-180'}`} />
         </TapButton>
 
         {/* Dropdown */}

@@ -147,7 +147,7 @@ const Body = ({ selectedUnits }: BodyProps) => {
                             >
                                 <i>{
                                     typeof currentTemp === 'number'
-                                        ? convertTemp(currentTemp, '°F')
+                                        ? convertTemp(currentTemp, tempUnit)
                                         : currentTemp
                                     }°
                                 </i>
