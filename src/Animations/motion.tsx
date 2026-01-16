@@ -296,7 +296,7 @@ export const HoverCard = ({
 // Tap scale button
 export const TapButton = ({ children, className, ...props }: MotionContainerProps) => (
   <motion.div
-    whileTap={{ scale: 0.98 }}
+    whileTap={{ scale: 0.95 }}
     className={className}
     {...props}
   >

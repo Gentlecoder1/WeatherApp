@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import Logo from "../assets/Logo.svg"
 import Unit from "./Unit"
 import { useState } from "react";
-import { MotionHeader, FadeInLeft, dropIn } from "../Animations/motion";
+import { MotionHeader, FadeInLeft, dropIn, TapButton } from "../Animations/motion";
 
 interface HeaderProps {
   selectedUnits: Record<number, number>;
@@ -27,20 +27,16 @@ const Header = ({ selectedUnits, setSelectedUnits }: HeaderProps) => {
                 <p>Weather Now</p>
             </FadeInLeft>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+            <TapButton
               onClick={() => setOpenUnit(!openUnit)}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#262540] rounded-lg flex items-center gap-2.5 px-2.5 py-2 sm:px-4 sm:py-3 cursor-pointer"
+              className={`bg-[#262540] rounded-lg flex items-center gap-2.5 px-2.5 py-2 sm:px-4 sm:py-3 cursor-pointer ${!openUnit ? '' : 'border-2 border-white'}`}
             >
                 <IoSettingsOutline className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
                 <p className="text-[14px] sm:text-[16px] font-medium">Units</p>
                 <ChevronDown 
-                  className={`w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 ${!openUnit ? '' : 'rotate-180'}`}
+                  className={`w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 transition-all duration-300 ${!openUnit ? '' : 'rotate-180'}`}
                 />
-            </motion.div>
+            </TapButton>
         </div>
 
         <AnimatePresence>

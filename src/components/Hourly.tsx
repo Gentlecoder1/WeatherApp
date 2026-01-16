@@ -55,12 +55,12 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
 
         <TapButton
           onClick={() => setOpenDay(!openDay)}
-          className="bg-[#3C3B5E] rounded-lg flex items-center gap-3 px-4 py-2 sm:px-4 sm:py-3 cursor-pointer"
+          className={`bg-[#3C3B5E] rounded-lg flex items-center gap-3 px-4 py-2 sm:px-4 sm:py-3 cursor-pointer ${!openDay ? '' : 'border-2 border-white'}`}
         >
           <p className="text-[14px] sm:text-[16px] font-medium">
             {selectedDay.name}
           </p>
-          <ChevronDown className={`w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 ${!openDay ? '' : 'rotate-180'}`} />
+          <ChevronDown className={`w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 transition-all duration-300 ${!openDay ? '' : 'rotate-180'}`} />
         </TapButton>
 
         {/* Dropdown */}

@@ -28,13 +28,13 @@ const Unit = ({ selectedUnits, setSelectedUnits }: UnitProps) => {
                                 <li>
                                     <TapButton
                                         key={unit.id}
-                                            onClick={() => handleSelect(index, unit.id)}
-                                            className={clsx(
-                                                "py-2.5 px-2 text-[16px] font-medium rounded-lg text-white hover:bg-[#3C3B5E]/50",
-                                                selectedUnits[index] === unit.id 
-                                                    ? "bg-[#3C3B5E] " 
-                                                    : ""
-                                            )}
+                                        onClick={() => handleSelect(index, unit.id)}
+                                        className={clsx(
+                                            "py-2.5 px-2 text-[16px] font-medium rounded-lg text-white hover:bg-[#3C3B5E]/50",
+                                            selectedUnits[index] === unit.id 
+                                                ? "bg-[#3C3B5E] " 
+                                                : ""
+                                        )}
                                     >
                                         {unit.name}
                                     </TapButton>
