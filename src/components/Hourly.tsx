@@ -6,7 +6,6 @@ import { ChevronDown } from "lucide-react";
 import Days from "./Days";
 import { getOrderedWeekDays, type Day } from "../utils/data";
 import { weatherIcons } from ".";
-import type { WeatherType } from "../Functions.ts/useWeatherLogic";
 import {
   FadeInRight,
   StaggerContainer,
@@ -16,17 +15,18 @@ import {
   TapButton
 } from "../Animations/motion";
 import { convertTemp } from '../utils/unitConversion';
+import type { HourlyDataItem } from '../utils/data'
 
-interface HourlyDataItem {
-  time: string;
-  date: string;
-  temperature: number;
-  humidity: number;
-  precipitation: number;
-  weatherCode?: number;
-  weatherType?: WeatherType;
-  unit: string;
-}
+// interface HourlyDataItem {
+//   time: string;
+//   date: string;
+//   temperature: number;
+//   humidity: number;
+//   precipitation: number;
+//   weatherCode?: number;
+//   weatherType?: WeatherType;
+//   unit: string;
+// }
 
 interface HourlyProps {
   hourlyData: HourlyDataItem[];
@@ -134,7 +134,7 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
                       )}
                     </div>
                     <p className="text-[20px] font-medium">
-                      {new Date(item.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      {new Date(item.time).toLocaleTimeString([], { hour: "2-digit" })}
                     </p>
                   </div>
                   <p className="text-[16px] font-medium">{displayTemp}{unit}</p>

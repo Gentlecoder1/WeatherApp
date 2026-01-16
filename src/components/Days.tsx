@@ -1,11 +1,5 @@
 import clsx from "clsx"
-
-
-interface Day {
-    id: number;
-    name: string;
-    date: string;
-}
+import type { Day } from '../utils/data'
 
 interface DaysProps {
     selectedDay: Day | null | undefined;

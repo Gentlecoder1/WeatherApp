@@ -1,18 +1,8 @@
 import { FadeInUp, StaggerContainer, StaggerItemScale, HoverCard } from '../Animations/motion'
 import { weatherIcons } from '.'
-import type { WeatherType } from '../Functions.ts/useWeatherLogic'
+import type { DailyDataItem } from '../utils/data'
 
 import Sunny from '../assets/Sunny.png'
-
-interface DailyDataItem {
-  id: number;
-  time: string;
-  date: string;
-  high: number;
-  low: number;
-  weatherCode?: number;
-  weatherType?: WeatherType;
-}
 
 interface DailyProps {
   dailyData: DailyDataItem[];
@@ -28,17 +18,21 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
     day: '--',
     high: '--' as string | number,
     low: '--' as string | number,
+    unit: ''
   }));
+
+  const dailyApi = dailyData.map((day, idx) => ({
+    id: idx + 1,
+    icon: day.weatherType ? weatherIcons[day.weatherType] : '--',
+    day: day.time || '--',
+    high: typeof day.high === 'number' ? day.high : '--',
+    low: typeof day.low === 'number' ? day.low : '--',
+    unit: day.unit || ''
+  }))
 
   // Map daily data from API - use weatherType to get correct icon
   const dailyForecast = dailyData.length > 0
-    ? dailyData.map((day, idx) => ({
-        id: idx + 1,
-        icon: day.weatherType ? weatherIcons[day.weatherType] : '--',
-        day: day.time || '--',
-        high: typeof day.high === 'number' ? day.high : '--',
-        low: typeof day.low === 'number' ? day.low : '--',
-      }))
+    ? dailyApi
     : placeholderData;
 
   if (loading) {
@@ -70,21 +64,21 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
             childrenDelay={0.8}
             className='w-full grid grid-cols-3 md:grid-cols-7 gap-4'
           >
-            {dailyForecast.map(({ id, day, icon, high, low })=> (
-                <StaggerItemScale key={id}>
-                    <HoverCard 
-                        scale={1.05}
-                        lift={-5}
-                        className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] flex flex-col justify-center gap-4 cursor-pointer'
-                    >
-                        <p className='text-[18px] text-center font-medium'>{day}</p>
-                        <div className='mx-auto w-12 h-12'><img src={icon} alt="weatherIcon" className='w-full h-full' /></div>
-                        <div className='w-full flex justify-between'>
-                            <p>{low}°</p>
-                            <p>{high}°</p>
-                        </div>
-                    </HoverCard>
-                </StaggerItemScale>
+            {dailyForecast.map(({ id, day, icon, high, low, unit })=> (
+              <StaggerItemScale key={id}>
+                <HoverCard 
+                  scale={1.05}
+                  lift={-5}
+                  className='px-3 py-4 rounded-xl bg-[#262540] border border-[#3C3B5E] flex flex-col justify-center gap-4 cursor-pointer'
+                >
+                  <p className='text-[18px] text-center font-medium'>{day}</p>
+                  <div className='mx-auto w-12 h-12'><img src={icon} alt="weatherIcon" className='w-full h-full' /></div>
+                  <div className='w-full flex justify-between'>
+                    <p>{low}{unit}</p>
+                    <p>{high}{unit}</p>
+                  </div>
+                </HoverCard>
+              </StaggerItemScale>
             ))}
           </StaggerContainer>
         ) : (

@@ -1,6 +1,3 @@
-// assets import
-
-
 // components imports
 import Hourly from './Hourly'
 import Daily from './Daily'
@@ -10,7 +7,7 @@ import NoResult from './NoResult'
 import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from '../Animations/motion'
 import { weatherIcons } from '.'
 import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
-// import { convertTemp, convertWind, convertPrecip } from '../utils/unitConversion';
+import { convertTemp } from '../utils/unitConversion';
 
 // external import
 import { Search } from "lucide-react"
@@ -38,33 +35,33 @@ const Body = ({ selectedUnits }: BodyProps) => {
         hourlyData
     } = useWeatherLogic();
 
-    // Helper to get unit string from selectedUnits
-    // const getUnit = (categoryIndex: number) => {
-    //   const unitObj = unitTemp[categoryIndex].units.find(u => u.id === selectedUnits[categoryIndex]);
-    //   return unitObj ? unitObj.name.match(/\((.*?)\)/)?.[1] || '' : '';
-    // };
-  
     // Map selectedUnits to actual unit values in each component
     const tempUnit = selectedUnits[0] === 1 ? '°C' : '°F';
     const windUnit = selectedUnits[1] === 1 ? 'km/h' : 'mph';
     const precipUnit = selectedUnits[2] === 1 ? 'mm' : 'in';
-    // Map units for display
+
     const conditionUnits = [tempUnit, '%', windUnit, precipUnit];
 
-    const hourlyUnits = [tempUnit]
+    // Ensure all condition values are string or number and attach dynamic unit
+    const safeConditions = conditions.map((c, i) => ({
+        id: c.id,
+        value: typeof c.value === 'undefined' ? '--' : c.value,
+        unit: conditionUnits[i]
+    }));
 
-        // Ensure all condition values are string or number and attach dynamic unit
-        const safeConditions = conditions.map((c, i) => ({
-            id: c.id,
-            value: typeof c.value === 'undefined' ? '--' : c.value,
-            unit: conditionUnits[i]
-        }));
+    // Add unit property to each hourly data item
+    const hourlyDataWithUnit = hourlyData.map(item => ({
+        ...item,
+        unit: tempUnit
+    }));
 
-        // Add unit property to each hourly data item
-        const hourlyDataWithUnit = hourlyData.map(item => ({
-            ...item,
-            unit: tempUnit
-        }));
+    // Add unit property and convert high/low for each daily data item
+    const dailyDataWithUnit = dailyData.map(item => ({
+        ...item,
+        high: typeof item.high === 'number' && tempUnit === '°F' ? convertTemp(item.high, '°F') : item.high,
+        low: typeof item.low === 'number' && tempUnit === '°F' ? convertTemp(item.low, '°F') : item.low,
+        unit: tempUnit
+    }));
   
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-16">
@@ -157,7 +154,7 @@ const Body = ({ selectedUnits }: BodyProps) => {
                     <Condition 
                         conditions={safeConditions}
                     />
-                    <Daily dailyData={dailyData} loading={loading} />
+                    <Daily dailyData={dailyDataWithUnit} loading={loading} />
                 </div>
 
                 <Hourly hourlyData={hourlyDataWithUnit} loading={loading} />
