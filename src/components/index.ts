@@ -3,7 +3,7 @@ import Cloud from '../assets/cloud.png'
 import Rain from '../assets/Rain.svg'
 import Snowy from '../assets/Snow.svg'
 import Thunderstorms from '../assets/Thunderstorms.svg'
-import PartlyCloudy from '../assets/PartlyCloudy.svg'
+// import PartlyCloudy from '../assets/PartlyCloudy.svg'
 
 
 export const unitTemp = [

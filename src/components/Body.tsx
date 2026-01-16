@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 // assets import
 
 
@@ -11,7 +10,7 @@ import NoResult from './NoResult'
 import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from '../Animations/motion'
 import { weatherIcons } from '.'
 import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
-import { convertTemp, convertWind, convertPrecip } from '../utils/unitConversion';
+// import { convertTemp, convertWind, convertPrecip } from '../utils/unitConversion';
 
 // external import
 import { Search } from "lucide-react"
