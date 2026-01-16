@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 import Days from "./Days";
-import { getOrderedWeekDays, type Day } from "../utils/data";
+import { getOrderedWeekDays } from ".";
 import { weatherIcons } from ".";
 import {
   FadeInRight,
@@ -15,18 +15,7 @@ import {
   TapButton
 } from "../Animations/motion";
 import { convertTemp } from '../utils/unitConversion';
-import type { HourlyDataItem } from '../utils/data'
-
-// interface HourlyDataItem {
-//   time: string;
-//   date: string;
-//   temperature: number;
-//   humidity: number;
-//   precipitation: number;
-//   weatherCode?: number;
-//   weatherType?: WeatherType;
-//   unit: string;
-// }
+import type { Day, HourlyDataItem } from '../utils/data'
 
 interface HourlyProps {
   hourlyData: HourlyDataItem[];
@@ -112,9 +101,8 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
         >
           {filteredHourly.map((item, idx) => {
             let temp = item.temperature ?? '--';
-            const unit = item.unit ?? '';
             // Convert temperature if needed
-            if (typeof temp === 'number' && unit === '°F') {
+            if (typeof temp === 'number') {
               temp = convertTemp(temp, '°F');
             }
             const displayTemp = typeof temp === 'number' ? Math.round(temp) : temp;
@@ -137,7 +125,7 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
                       {new Date(item.time).toLocaleTimeString([], { hour: "2-digit" })}
                     </p>
                   </div>
-                  <p className="text-[16px] font-medium">{displayTemp}{unit}</p>
+                  <p className="text-[16px] font-medium">{displayTemp}°</p>
                 </HoverCard>
               </StaggerItemX>
             )

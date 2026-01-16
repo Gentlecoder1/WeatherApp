@@ -290,7 +290,6 @@ export const useWeatherLogic = () => {
         searchCities,
         fetchWeatherData,
         handleSearch,
-        // Computed values
         currentTemp,
         displayName,
         currentDate,

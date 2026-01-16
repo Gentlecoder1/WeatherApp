@@ -4,6 +4,7 @@ import Rain from '../assets/Rain.svg'
 import Snowy from '../assets/Snow.svg'
 import Thunderstorms from '../assets/Thunderstorms.svg'
 // import PartlyCloudy from '../assets/PartlyCloudy.svg'
+import type { Day } from '../utils/data'
 
 
 export const unitTemp = [
@@ -41,6 +42,30 @@ export const conditionTitles = [
     { id: 4, title: "Precipitation" }
 ]
 
+/**
+ * Get ordered week days starting from today (local function, not dependent on API)
+ * Returns 7 days with current day at the top
+ */
+export const getOrderedWeekDays = (): Day[] => {
+  const today = new Date();
+  const days: Day[] = [];
+
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+    const dateStr = date.toISOString().split('T')[0]; // "2026-01-15" format
+
+    days.push({
+      id: i + 1,
+      name: dayName,
+      date: dateStr
+    });
+  }
+
+  return days;
+};
 
  // Weather icon mapping
 export const weatherIcons = {

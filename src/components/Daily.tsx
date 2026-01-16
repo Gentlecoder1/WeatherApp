@@ -18,7 +18,6 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
     day: '--',
     high: '--' as string | number,
     low: '--' as string | number,
-    unit: ''
   }));
 
   const dailyApi = dailyData.map((day, idx) => ({
@@ -27,7 +26,6 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
     day: day.time || '--',
     high: typeof day.high === 'number' ? day.high : '--',
     low: typeof day.low === 'number' ? day.low : '--',
-    unit: day.unit || ''
   }))
 
   // Map daily data from API - use weatherType to get correct icon
@@ -64,7 +62,7 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
             childrenDelay={0.8}
             className='w-full grid grid-cols-3 md:grid-cols-7 gap-4'
           >
-            {dailyForecast.map(({ id, day, icon, high, low, unit })=> (
+            {dailyForecast.map(({ id, day, icon, high, low })=> (
               <StaggerItemScale key={id}>
                 <HoverCard 
                   scale={1.05}
@@ -74,8 +72,8 @@ const Daily = ({ dailyData = [], loading }: DailyProps) => {
                   <p className='text-[18px] text-center font-medium'>{day}</p>
                   <div className='mx-auto w-12 h-12'><img src={icon} alt="weatherIcon" className='w-full h-full' /></div>
                   <div className='w-full flex justify-between'>
-                    <p>{low}{unit}</p>
-                    <p>{high}{unit}</p>
+                    <p>{low}°</p>
+                    <p>{high}°</p>
                   </div>
                 </HoverCard>
               </StaggerItemScale>

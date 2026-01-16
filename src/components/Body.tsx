@@ -12,7 +12,6 @@ import { convertTemp } from '../utils/unitConversion';
 // external import
 import { Search } from "lucide-react"
 import { motion } from "framer-motion"
-// import { unitTemp } from '.';
 
 interface BodyProps {
   selectedUnits: Record<number, number>;
@@ -146,7 +145,12 @@ const Body = ({ selectedUnits }: BodyProps) => {
                                 animate={floatAnimationReverse}
                                 className="text-[96px] font-bold"
                             >
-                                <i>{currentTemp}°</i>
+                                <i>{
+                                    typeof currentTemp === 'number'
+                                        ? convertTemp(currentTemp, '°F')
+                                        : currentTemp
+                                    }°
+                                </i>
                             </motion.div>
                         </div>
                     </ScaleFade>
