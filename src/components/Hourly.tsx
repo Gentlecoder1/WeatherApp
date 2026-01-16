@@ -1,5 +1,6 @@
 // Hourly.tsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useClickOutside } from "../hooks/useClickOutside";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
@@ -29,6 +30,8 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
   // Selected day state (default to current day)
   const [selectedDay, setSelectedDay] = useState<Day>(days[0]);
   const [openDay, setOpenDay] = useState(false);
+  const daysRef = useRef<HTMLDivElement>(null);
+  useClickOutside<HTMLDivElement>(daysRef, () => setOpenDay(false));
 
   // Hourly data filtered for selected day
   const [filteredHourly, setFilteredHourly] = useState<typeof hourlyData>([]);
@@ -54,7 +57,11 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
         <h1 className="text-[20px] font-semibold">Hourly forecast</h1>
 
         <TapButton
-          onClick={() => setOpenDay(!openDay)}
+          data-unit-toggle
+          onClick={e => {
+            e.stopPropagation();
+            setOpenDay(!openDay);
+          }}
           className={`bg-[#3C3B5E] rounded-lg flex items-center gap-3 px-4 py-2 sm:px-4 sm:py-3 cursor-pointer ${!openDay ? '' : 'border-2 border-white'}`}
         >
           <p className="text-[14px] sm:text-[16px] font-medium">
@@ -74,6 +81,7 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
               className="absolute right-0 top-full mt-2 z-10"
             >
               <Days
+                ref={daysRef}
                 selectedDay={selectedDay}
                 days={days}
                 onSelect={(day) => {

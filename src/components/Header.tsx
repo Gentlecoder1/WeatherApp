@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from "framer-motion"
 
 import Logo from "../assets/Logo.svg"
 import Unit from "./Unit"
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useClickOutside } from "../hooks/useClickOutside";
 import { MotionHeader, FadeInLeft, dropIn, TapButton } from "../Animations/motion";
 
 interface HeaderProps {
@@ -15,6 +16,8 @@ interface HeaderProps {
 const Header = ({ selectedUnits, setSelectedUnits }: HeaderProps) => {
 
   const [openUnit, setOpenUnit] = useState(false);
+  const unitRef = useRef<HTMLDivElement>(null);
+  useClickOutside<HTMLDivElement>(unitRef, () => setOpenUnit(false));
 
   return (
     <MotionHeader className="w-full mx-auto space-y-3">
@@ -28,7 +31,11 @@ const Header = ({ selectedUnits, setSelectedUnits }: HeaderProps) => {
             </FadeInLeft>
 
             <TapButton
-              onClick={() => setOpenUnit(!openUnit)}
+              data-unit-toggle
+              onClick={e => {
+                e.stopPropagation();
+                setOpenUnit(!openUnit);
+              }}
               className={`bg-[#262540] rounded-lg flex items-center gap-2.5 px-2.5 py-2 sm:px-4 sm:py-3 cursor-pointer ${!openUnit ? '' : 'border-2 border-white'}`}
             >
                 <IoSettingsOutline className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
@@ -48,7 +55,11 @@ const Header = ({ selectedUnits, setSelectedUnits }: HeaderProps) => {
               exit="exit"
               className="flex justify-end"
             >
-              <Unit selectedUnits={selectedUnits} setSelectedUnits={setSelectedUnits} />
+              <Unit 
+                ref={unitRef}
+                selectedUnits={selectedUnits} 
+                setSelectedUnits={setSelectedUnits}
+              />
             </motion.div>
           )}
         </AnimatePresence>
