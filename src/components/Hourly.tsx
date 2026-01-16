@@ -57,7 +57,7 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
   return (
     <FadeInRight
       delay={0.6}
-      className="w-full lg:max-w-[30%] bg-[#262540] rounded-[20px] flex flex-col p-6 gap-4"
+      className="w-full lg:max-w-[30%] max-h-180 bg-[#262540] rounded-[20px] flex flex-col p-6 gap-4"
     >
       <div className="w-full flex justify-between items-center relative">
         <h1 className="text-[20px] font-semibold">Hourly forecast</h1>
@@ -106,7 +106,7 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
         <StaggerContainer
           staggerDelay={0.12}
           childrenDelay={0.5}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4 h-100% overflow-y-auto scrollbar-hidden"
         >
           {filteredHourly.map((item, idx) => (
             <StaggerItemX key={idx}>
