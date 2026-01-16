@@ -1,4 +1,4 @@
-import type { WeatherType } from '../Functions.ts/useWeatherLogic'
+import type { WeatherType } from '../hooks/useWeatherLogic'
 
 export interface Day {
   id: number;

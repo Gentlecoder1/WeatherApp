@@ -3,7 +3,10 @@ import { useEffect } from "react";
 export function useClickOutside<T extends HTMLElement>(ref: React.RefObject<T | null>, onClose: () => void) {
   useEffect(() => {
     function handleClick(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      // If the click is on a toggle button, ignore it
+      const target = event.target as HTMLElement;
+      if (target.closest('[data-unit-toggle],[data-day-toggle]')) return;
+      if (ref.current && !ref.current.contains(target)) {
         onClose();
       }
     }

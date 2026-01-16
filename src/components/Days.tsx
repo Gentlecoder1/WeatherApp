@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import clsx from "clsx"
 import type { Day } from '../utils/data'
 import { TapButton } from "../Animations/motion";

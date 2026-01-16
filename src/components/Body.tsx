@@ -6,7 +6,7 @@ import WeatherBackground from './WeatherBackground'
 import NoResult from './NoResult'
 import { FadeInUp, ScaleFade, TapButton, floatAnimation, floatAnimationReverse } from '../Animations/motion'
 import { weatherIcons } from '.'
-import { useWeatherLogic } from '../Functions.ts/useWeatherLogic'
+import { useWeatherLogic } from '../hooks/useWeatherLogic'
 import { convertTemp } from '../utils/unitConversion';
 
 // external import

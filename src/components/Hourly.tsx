@@ -6,7 +6,6 @@ import { ChevronDown } from "lucide-react";
 
 import Days from "./Days";
 import { getOrderedWeekDays } from ".";
-import { weatherIcons } from ".";
 import {
   FadeInRight,
   StaggerContainer,
@@ -15,12 +14,15 @@ import {
   dropIn,
   TapButton
 } from "../Animations/motion";
+import { weatherIcons } from ".";
 import { convertTemp } from '../utils/unitConversion';
 import type { Day, HourlyDataItem } from '../utils/data'
 
 interface HourlyProps {
   hourlyData: HourlyDataItem[];
   loading: boolean;
+  // openDay: boolean;
+  // setOpenDay: (v: boolean | ((v: boolean) => boolean)) => void;
 }
 
 const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
@@ -57,7 +59,7 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
         <h1 className="text-[20px] font-semibold">Hourly forecast</h1>
 
         <TapButton
-          data-unit-toggle
+          data-day-toggle
           onClick={e => {
             e.stopPropagation();
             setOpenDay(!openDay);
