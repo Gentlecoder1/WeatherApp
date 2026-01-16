@@ -78,7 +78,6 @@ export const useWeatherLogic = () => {
     const abortControllerRef = useRef<AbortController | null>(null);
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-
     const geoUrl = `https://geocoding-api.open-meteo.com/v1/search`
     const mainUrl = `https://api.open-meteo.com/v1/forecast`    
     
@@ -92,7 +91,7 @@ export const useWeatherLogic = () => {
         setSuggestions([]);
         setLoading(true);
 
-        const fullName = `${city.name}${city.admin1 ? `, ${city.admin1}` : ''}, ${city.country}`;
+        const fullName = `${city.name ? city.name : ''}${city.admin1 ? `, ${city.admin1}` : ''}${city.country ? `, ${city.country}` : ''}`;
 
         try {
             const weatherRes = await axios.get(mainUrl, {
