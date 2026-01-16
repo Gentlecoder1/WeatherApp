@@ -44,19 +44,27 @@ const Body = ({ selectedUnits }: BodyProps) => {
     //   return unitObj ? unitObj.name.match(/\((.*?)\)/)?.[1] || '' : '';
     // };
   
-    // Map selectedUnits to actual unit values for Condition
+    // Map selectedUnits to actual unit values in each component
     const tempUnit = selectedUnits[0] === 1 ? '°C' : '°F';
     const windUnit = selectedUnits[1] === 1 ? 'km/h' : 'mph';
     const precipUnit = selectedUnits[2] === 1 ? 'mm' : 'in';
     // Map units for display
     const conditionUnits = [tempUnit, '%', windUnit, precipUnit];
 
-    // Ensure all condition values are string or number and attach dynamic unit
-    const safeConditions = conditions.map((c, i) => ({
-      id: c.id,
-      value: typeof c.value === 'undefined' ? '--' : c.value,
-      unit: conditionUnits[i]
-    }));
+    const hourlyUnits = [tempUnit]
+
+        // Ensure all condition values are string or number and attach dynamic unit
+        const safeConditions = conditions.map((c, i) => ({
+            id: c.id,
+            value: typeof c.value === 'undefined' ? '--' : c.value,
+            unit: conditionUnits[i]
+        }));
+
+        // Add unit property to each hourly data item
+        const hourlyDataWithUnit = hourlyData.map(item => ({
+            ...item,
+            unit: tempUnit
+        }));
   
   return (
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-16">
@@ -152,7 +160,7 @@ const Body = ({ selectedUnits }: BodyProps) => {
                     <Daily dailyData={dailyData} loading={loading} />
                 </div>
 
-                <Hourly hourlyData={hourlyData} loading={loading} />
+                <Hourly hourlyData={hourlyDataWithUnit} loading={loading} />
             </div>
         )}
     </div>

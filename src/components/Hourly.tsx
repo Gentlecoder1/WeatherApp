@@ -15,6 +15,7 @@ import {
   dropIn,
   TapButton
 } from "../Animations/motion";
+import { convertTemp } from '../utils/unitConversion';
 
 interface HourlyDataItem {
   time: string;
@@ -24,6 +25,7 @@ interface HourlyDataItem {
   precipitation: number;
   weatherCode?: number;
   weatherType?: WeatherType;
+  unit: string;
 }
 
 interface HourlyProps {
@@ -108,29 +110,38 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
           childrenDelay={0.5}
           className="flex flex-col gap-4 h-100% overflow-y-auto scrollbar-hidden"
         >
-          {filteredHourly.map((item, idx) => (
-            <StaggerItemX key={idx}>
-              <HoverCard
-                scale={1.05}
-                lift={0}
-                className="flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 flex items-center justify-center">
-                    {item.weatherType ? (
-                      <img src={weatherIcons[item.weatherType]} className="w-10 h-10" alt="weather" />
-                    ) : (
-                      <span className="text-[20px] text-gray-400">--</span>
-                    )}
+          {filteredHourly.map((item, idx) => {
+            let temp = item.temperature ?? '--';
+            const unit = item.unit ?? '';
+            // Convert temperature if needed
+            if (typeof temp === 'number' && unit === '°F') {
+              temp = convertTemp(temp, '°F');
+            }
+            const displayTemp = typeof temp === 'number' ? Math.round(temp) : temp;
+            return (
+              <StaggerItemX key={idx}>
+                <HoverCard
+                  scale={1.05}
+                  lift={0}
+                  className="flex justify-between items-center px-4 py-2.5 rounded-lg bg-[#302F4A] border border-[#3C3B5E] hover:border-[#76a5e4]"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 flex items-center justify-center">
+                      {item.weatherType ? (
+                        <img src={weatherIcons[item.weatherType]} className="w-10 h-10" alt="weather" />
+                      ) : (
+                        <span className="text-[20px] text-gray-400">--</span>
+                      )}
+                    </div>
+                    <p className="text-[20px] font-medium">
+                      {new Date(item.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    </p>
                   </div>
-                  <p className="text-[20px] font-medium">
-                    {new Date(item.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                  </p>
-                </div>
-                <p className="text-[16px] font-medium">{item.temperature}°</p>
-              </HoverCard>
-            </StaggerItemX>
-          ))}
+                  <p className="text-[16px] font-medium">{displayTemp}{unit}</p>
+                </HoverCard>
+              </StaggerItemX>
+            )
+          })}
         </StaggerContainer>
       ) : (
         <div className="flex flex-col gap-4">
