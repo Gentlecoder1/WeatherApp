@@ -18,7 +18,7 @@ const PageLoader = ({ duration = 1200 }: { duration?: number }) => {
 
   if (!show) return null;
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#02012C]/40 backdrop-blur-lg">
+    <div className="fixed h-full w-full inset-0 z-50 flex items-center justify-center bg-[#02012C]/40 backdrop-blur-lg">
       <motion.div
         className="relative w-16 h-16"
         animate={{ rotate: 360 }}

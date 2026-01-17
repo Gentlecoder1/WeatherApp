@@ -1,5 +1,8 @@
+import { motion } from 'framer-motion'
+
+import React from 'react';
 import { conditionTitles } from '.'
-import { StaggerContainer, StaggerItem, HoverCard } from '../Animations/motion'
+import { StaggerContainer, StaggerItem, HoverCard, floatAnimation, floatAnimationReverse } from '../Animations/motion'
 import { convertTemp, convertWind, convertPrecip } from '../utils/unitConversion';
 
 interface ConditionProps {
@@ -12,7 +15,7 @@ const Condition = ({ conditions = [] }: ConditionProps) => {
       childrenDelay={0.6}
       className='w-full grid grid-cols-2 sm:grid-cols-4 gap-5'
     >
-      {conditionTitles.map(({ id, title }) => {
+      {conditionTitles.map(({ id, icon, title }) => {
         const condition = conditions.find(c => c.id === id);
         let value = condition?.value ?? '--';
         const unit = condition?.unit ?? '';
@@ -32,7 +35,18 @@ const Condition = ({ conditions = [] }: ConditionProps) => {
               // lift={-5}
               className='p-5 rounded-xl bg-[#262540] border border-[#3C3B5E] space-y-3'
             >
-              <p className='text-[18px] font-medium text-[#D4D3D9]'>{title}</p>
+              <div className='flex gap-4 items-center'>
+                <motion.div 
+                  animate={
+                    id === 3 
+                    ? { rotate: 360, transition: { duration: 0.9, repeat: Infinity, ease: "linear" } }
+                    : id % 2 === 0 ? floatAnimation : floatAnimationReverse
+                  }
+                >
+                  {React.createElement(icon, { className: "w-6 h-6" })}
+                </motion.div>
+                <p className='text-[18px] font-medium text-[#D4D3D9] truncate'>{title}</p>
+              </div>
               <p className='text-[32px] font-300'>{displayValue}{unit}</p>
             </HoverCard>
           </StaggerItem>

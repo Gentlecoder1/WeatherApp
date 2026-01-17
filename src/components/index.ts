@@ -4,6 +4,10 @@ import Rain from '../assets/Rain.svg'
 import Snowy from '../assets/Snow.svg'
 import Thunderstorms from '../assets/Thunderstorms.svg'
 // import PartlyCloudy from '../assets/PartlyCloudy.svg'
+import { BsThermometerSun } from "react-icons/bs";
+import { FiCloudRain } from "react-icons/fi";
+import { MdOutlineWindPower } from "react-icons/md";
+import { SiRainmeter } from "react-icons/si";
 import type { Day } from '../utils/data'
 
 
@@ -36,10 +40,10 @@ export const unitTemp = [
 
 // Conditions titles - values come from API via useWeatherLogic hook
 export const conditionTitles = [
-    { id: 1, title: "Feels like" },
-    { id: 2, title: "Humidity" },
-    { id: 3, title: "Wind" },
-    { id: 4, title: "Precipitation" }
+    { id: 1, icon: BsThermometerSun, title: "Feels like" },
+    { id: 2, icon: SiRainmeter, title: "Humidity" },
+    { id: 3, icon: MdOutlineWindPower, title: "Wind" },
+    { id: 4, icon: FiCloudRain, title: "Precipitation" }
 ]
 
 /**
