@@ -30,9 +30,9 @@ const Condition = ({ conditions = [] }: ConditionProps) => {
             <HoverCard
               scale={1.02}
               // lift={-5}
-              className='p-5 rounded-xl bg-[#262540] border border-[#3C3B5E] space-y-5'
+              className='p-5 rounded-xl bg-[#262540] border border-[#3C3B5E] space-y-3'
             >
-              <p className='text-[18px] font-500 text-[#D4D3D9]'>{title}</p>
+              <p className='text-[18px] font-medium text-[#D4D3D9]'>{title}</p>
               <p className='text-[32px] font-300'>{displayValue}{unit}</p>
             </HoverCard>
           </StaggerItem>

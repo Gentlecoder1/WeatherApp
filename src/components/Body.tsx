@@ -68,7 +68,7 @@ const Body = ({ selectedUnits }: BodyProps) => {
             delay={0.1}
             className="max-w-82.5 sm:max-w-120.5 md:max-w-182.75 text-center"
         >
-            <h1 className="text-[45px] sm:text-[52px] font-bold text-white">How's the sky looking today?</h1>
+            <h1 className="grotesque text-[45px] sm:text-[52px] font-bold text-white">How's the sky looking today?</h1>
         </FadeInUp>
 
         <FadeInUp 
@@ -134,7 +134,7 @@ const Body = ({ selectedUnits }: BodyProps) => {
 
                         <div className="relative z-10 space-y-3">
                             <h1 className="text-[28px] font-bold">{displayName}</h1>
-                            <p className="text-[18px] font-500">{currentDate}</p>
+                            <p className="text-[18px] font-medium">{currentDate}</p>
                         </div>
 
                         <div className="relative z-10 flex items-center">
