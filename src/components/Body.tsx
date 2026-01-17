@@ -12,6 +12,7 @@ import { convertTemp } from '../utils/unitConversion';
 // external import
 import { Search } from "lucide-react"
 import { motion } from "framer-motion"
+import { ReactTyped, Typed } from 'react-typed';
 
 interface BodyProps {
   selectedUnits: Record<number, number>;
@@ -66,16 +67,25 @@ const Body = ({ selectedUnits }: BodyProps) => {
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-16">
         <FadeInUp 
             delay={0.1}
-            className="max-w-82.5 sm:max-w-120.5 md:max-w-182.75 text-center"
+            className="max-w-82.5 sm:max-w-120.5 md:max-w-full"
         >
-            <h1 className="grotesque text-[45px] sm:text-[52px] font-bold text-white">How's the sky looking today?</h1>
+            <ReactTyped
+                className='mx-auto text-center grotesque text-[45px] sm:text-[52px] lg:text-7xl font-bold text-white w-full'
+                strings={[
+                    "How's the sky looking today?",
+                    "Enjoy the weather!",
+                ]}
+                typeSpeed={40}
+                backSpeed={50}
+                loop
+            />
         </FadeInUp>
 
         <FadeInUp 
             delay={0.2}
             className="w-full mx-auto"
         >
-            <div className="flex flex-col sm:flex-row  gap-4 max-w-164 text-white mx-auto relative">
+            <div className="flex flex-col sm:flex-row gap-4 max-w-164 text-white mx-auto relative">
                 
                 {/* location input */}
                 <div className="bg-[#262540] w-full sm:max-w-131.5 rounded-xl flex items-center py-4 px-6 mx-auto gap-4">
