@@ -67,10 +67,10 @@ const Body = ({ selectedUnits }: BodyProps) => {
     <div className="w-full mx-auto my-10 flex flex-col items-center space-y-16">
         <FadeInUp 
             delay={0.1}
-            className="max-w-82.5 sm:max-w-120.5 md:max-w-full"
+            className="max-w-82.5 sm:max-w-120.5 md:max-w-full text-center"
         >
             <ReactTyped
-                className='mx-auto text-center grotesque text-[45px] sm:text-[52px] lg:text-7xl font-bold text-white w-full'
+                className='text-center grotesque text-[45px] sm:text-[52px] lg:text-7xl font-bold text-white '
                 strings={[
                     "How's the sky looking today?",
                     "Enjoy the weather!",
