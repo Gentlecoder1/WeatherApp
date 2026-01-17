@@ -12,7 +12,7 @@ import { convertTemp } from '../utils/unitConversion';
 // external import
 import { Search } from "lucide-react"
 import { motion } from "framer-motion"
-import { ReactTyped, Typed } from 'react-typed';
+import { ReactTyped } from 'react-typed';
 
 interface BodyProps {
   selectedUnits: Record<number, number>;
