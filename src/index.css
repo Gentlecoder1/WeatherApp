@@ -2,7 +2,7 @@
 
 html,
 body {
-  background-color: #02012C;
+  background-color:  #02012C;
   font-family: 'DM Sans', 'Bricolage Grotesque', sans-serif;
 }
 
@@ -36,6 +36,20 @@ body {
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #4658D9 transparent;
+}
+
+/* Global page scrollbar */
+html::-webkit-scrollbar {
+  width: 5px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #02012C;
+}
+
+html::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #8690dd;
 }
 
 .button {
