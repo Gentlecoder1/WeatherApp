@@ -111,9 +111,10 @@ const Hourly = ({ hourlyData = [], loading }: HourlyProps) => {
         >
           {filteredHourly.map((item, idx) => {
             let temp = item.temperature ?? '--';
-            // Convert temperature if needed
+            // Use the unit from the item, fallback to '°C' if missing
+            const unit = item.unit || '°C';
             if (typeof temp === 'number') {
-              temp = convertTemp(temp, '°F');
+              temp = convertTemp(temp, unit as '°C' | '°F');
             }
             const displayTemp = typeof temp === 'number' ? Math.round(temp) : temp;
             return (

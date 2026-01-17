@@ -27,4 +27,5 @@ export interface HourlyDataItem {
   precipitation: number;
   weatherCode?: number;
   weatherType?: WeatherType;
+  unit: string;
 }
