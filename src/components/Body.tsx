@@ -64,10 +64,10 @@ const Body = ({ selectedUnits }: BodyProps) => {
     }));
   
   return (
-    <div className="w-full mx-auto my-10 flex flex-col items-center space-y-16">
+    <div className="w-full mx-auto my-10 flex flex-col items-center space-y-12">
         <FadeInUp 
             delay={0.1}
-            className="max-w-82.5 sm:max-w-120.5 md:max-w-full text-center"
+            className="max-w-75 sm:max-w-120.5 md:max-w-full text-center"
         >
             <ReactTyped
                 className='text-center grotesque text-[45px] sm:text-[52px] lg:text-7xl font-bold text-white '
@@ -75,8 +75,8 @@ const Body = ({ selectedUnits }: BodyProps) => {
                     "How's the sky looking today?",
                     "Enjoy the weather!",
                 ]}
-                typeSpeed={40}
-                backSpeed={50}
+                typeSpeed={120}
+                backSpeed={100}
                 loop
             />
         </FadeInUp>
